@@ -1,2 +1,2 @@
-# WinZigC-Parser
-A lexical analyzer and a parser for the language WinZigC.
+# WinZigC-Compiler
+A compiler for the language WinZigC.
