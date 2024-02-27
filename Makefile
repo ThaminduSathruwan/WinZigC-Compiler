@@ -27,10 +27,7 @@ compile:
 link:
 	-$(CXX) $(TOP_CPPFLAGS) \
 		-o $(TOP_DIST_DIR)/$(OUTPUT) \
-		$(TOP_DIST_DIR)/scanner/*.o \
-		$(TOP_DIST_DIR)/parser/*.o \
-		$(TOP_DIST_DIR)/compiler/*.o \
-		$(TOP_DIST_DIR)/main/*.o \
+		$(TOP_DIST_DIR)/*/*.o \
 		2> $(LINK_ERR_LOG)
 	$(MAKE) check_errors
 

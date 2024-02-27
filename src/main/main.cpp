@@ -1,15 +1,15 @@
 #include <iostream>
-#include "../include/scanner.h"
-#include "../include/parser.h"
-#include "../include/compiler.h"
+#include <sstream>
+#include "winzigcmgr.h"
 
 int main()
 {
-    // Parser::Parser parser;
-    // Compiler::Compiler compiler;
-    // Scanner::Scanner scanner;
+    std::stringstream progStream;
+    progStream << "Welcome to the WinZigC compiler!" << std::endl;
+    std::string program = progStream.str();
 
-    std::cout << "Welcome to the WinZigC compiler!" << std::endl;
+    WinZigCC::WinZigCMgr winZigCMgr(program);
+    winZigCMgr.run();
 
     return 0;
 }

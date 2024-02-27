@@ -1,4 +1,4 @@
-SCAN_TARGETS = scanner token
+SCAN_TARGETS = scanner token scanmgr
 SCAN_CPPFLAGS := -I../../include -std=c++11 -Wall -Wextra
 SCAN_DIST_DIR = ../../dist/scanner
 SCAN_SRC_DIR = src\/scanner\/
@@ -10,7 +10,7 @@ all:
 	$(MAKE) check_error
 
 $(SCAN_TARGETS):
-	$(CXX) $(SCAN_CPPFLAGS) -c -o $(SCAN_DIST_DIR)/$@.o $@.cpp \
+	-$(CXX) $(SCAN_CPPFLAGS) -c -o $(SCAN_DIST_DIR)/$@.o $@.cpp \
 		2> $(SCAN_ERROR_LOG)
 
 check_error:

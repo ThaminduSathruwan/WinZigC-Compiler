@@ -1,4 +1,4 @@
-COMP_TARGETS = compiler
+COMP_TARGETS = compiler compilemgr
 COMP_CPPFLAGS := -I../../include -std=c++11 -Wall -Wextra
 COMP_DIST_DIR = ../../dist/compiler
 COMP_SRC_DIR = src\/compiler\/

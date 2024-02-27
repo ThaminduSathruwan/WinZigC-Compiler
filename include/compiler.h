@@ -1,3 +1,6 @@
+#ifndef COMPILER_H
+#define COMPILER_H
+
 #include <iostream>
 
 namespace Compiler
@@ -8,3 +11,5 @@ namespace Compiler
     };
 
 }
+
+#endif // !COMPILER_H

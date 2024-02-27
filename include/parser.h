@@ -1,3 +1,6 @@
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <iostream>
 
 namespace Parser
@@ -8,3 +11,5 @@ namespace Parser
     };
 
 }
+
+#endif // !PARSER_H

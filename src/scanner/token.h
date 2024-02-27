@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 #include <iostream>
 
 namespace Scanner
@@ -12,3 +15,5 @@ namespace Scanner
     } TokenType;
 
 }
+
+#endif // !TOKEN_H

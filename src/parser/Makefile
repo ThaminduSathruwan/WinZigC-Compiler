@@ -1,4 +1,4 @@
-PARSE_TARGETS = parser
+PARSE_TARGETS = parser parsemgr
 PARSE_CPPFLAGS := -I../../include -std=c++11 -Wall -Wextra
 PARSE_DIST_DIR = ../../dist/parser
 PARSE_SRC_DIR = src\/parser\/

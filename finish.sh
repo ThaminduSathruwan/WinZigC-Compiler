@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m'
 
-if [ -s "$ERROR_LOG" ] || [ -s "$LINK_ERR__LOG" ]; then
+if [ -s "$ERROR_LOG" ] || [ -s "$LINK_ERR_LOG" ]; then
 	echo "${RED}"
 	echo "====================================================================================================\n"
     echo "Build failed!\n"

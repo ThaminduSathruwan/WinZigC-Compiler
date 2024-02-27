@@ -1,3 +1,6 @@
+#ifndef SCANNER_H
+#define SCANNER_H
+
 #include <iostream>
 
 namespace Scanner
@@ -8,3 +11,5 @@ namespace Scanner
     };
 
 }
+
+#endif // !SCANNER_H
