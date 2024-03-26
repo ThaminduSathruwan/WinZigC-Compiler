@@ -11,7 +11,7 @@ all:
 
 $(SCAN_TARGETS):
 	-$(CXX) $(SCAN_CPPFLAGS) -c -o $(SCAN_DIST_DIR)/$@.o $@.cpp \
-		2> $(SCAN_ERROR_LOG)
+		2>> $(SCAN_ERROR_LOG)
 
 check_error:
 	if [ -s $(SCAN_ERROR_LOG) ]; then \

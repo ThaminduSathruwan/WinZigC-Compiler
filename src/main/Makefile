@@ -11,7 +11,7 @@ all:
 
 $(MAIN_TARGETS):
 	-$(CXX) $(MAIN_CPPFLAGS) -c -o $(MAIN_DIST_DIR)/$@.o $@.cpp \
-		2> $(MAIN_ERROR_LOG)
+		2>> $(MAIN_ERROR_LOG)
 
 check_error:
 	if [ -s $(MAIN_ERROR_LOG) ]; then \

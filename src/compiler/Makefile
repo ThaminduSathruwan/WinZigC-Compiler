@@ -11,7 +11,7 @@ all:
 
 $(COMP_TARGETS):
 	-$(CXX) $(COMP_CPPFLAGS) -c -o $(COMP_DIST_DIR)/$@.o $@.cpp \
-		2> $(COMP_ERROR_LOG)
+		2>> $(COMP_ERROR_LOG)
 
 check_error:
 	if [ -s $(COMP_ERROR_LOG) ]; then \

@@ -11,7 +11,7 @@ all:
 
 $(PARSE_TARGETS):
 	-$(CXX) $(PARSE_CPPFLAGS) -c -o $(PARSE_DIST_DIR)/$@.o $@.cpp \
-		2> $(PARSE_ERROR_LOG)
+		2>> $(PARSE_ERROR_LOG)
 
 check_error:
 	if [ -s $(PARSE_ERROR_LOG) ]; then \

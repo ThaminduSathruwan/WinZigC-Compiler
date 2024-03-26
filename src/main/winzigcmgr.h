@@ -1,4 +1,5 @@
 #ifndef WINZIGCMGR_H
+#define WINZIGCMGR_H
 
 #include <iostream>
 #include "../../include/scanmgr.h"
