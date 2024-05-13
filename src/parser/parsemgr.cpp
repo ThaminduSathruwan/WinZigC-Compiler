@@ -5,8 +5,10 @@
 namespace Parser
 {
 
-    ParseMgr::ParseMgr()
+    void ParseMgr::runParser(std::vector<Scanner::Token *> &tokens)
     {
+        Parser parser(tokens);
+        parser.parse();
     }
 
 }

@@ -9,10 +9,7 @@ namespace Parser
     class ParseMgr
     {
     public:
-        ParseMgr();
-
-    private:
-        Parser parser;
+        void runParser(std::vector<Scanner::Token *> &tokens);
     };
 }
 
