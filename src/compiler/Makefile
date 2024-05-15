@@ -10,7 +10,7 @@ all:
 	$(MAKE) check_error
 
 $(COMP_TARGETS):
-	-$(CXX) $(COMP_CPPFLAGS) -c -o $(COMP_DIST_DIR)/$@.o $@.cpp \
+	-$(CXX) $(COMP_CPPFLAGS) $(if $(DEBUG),-g) -c -o $(COMP_DIST_DIR)/$@.o $@.cpp \
 		2>> $(COMP_ERROR_LOG)
 
 check_error:

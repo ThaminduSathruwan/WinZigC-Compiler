@@ -10,7 +10,7 @@ all:
 	$(MAKE) check_error
 
 $(MAIN_TARGETS):
-	-$(CXX) $(MAIN_CPPFLAGS) -c -o $(MAIN_DIST_DIR)/$@.o $@.cpp \
+	-$(CXX) $(MAIN_CPPFLAGS) $(if $(DEBUG),-g) -c -o $(MAIN_DIST_DIR)/$@.o $@.cpp \
 		2>> $(MAIN_ERROR_LOG)
 
 check_error:
