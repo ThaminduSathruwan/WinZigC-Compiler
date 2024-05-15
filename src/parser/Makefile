@@ -10,7 +10,7 @@ all:
 	$(MAKE) check_error
 
 $(PARSE_TARGETS):
-	-$(CXX) $(PARSE_CPPFLAGS) -c -o $(PARSE_DIST_DIR)/$@.o $@.cpp \
+	-$(CXX) $(PARSE_CPPFLAGS) $(if $(DEBUG),-g) -c -o $(PARSE_DIST_DIR)/$@.o $@.cpp \
 		2>> $(PARSE_ERROR_LOG)
 
 check_error:

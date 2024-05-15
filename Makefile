@@ -7,7 +7,7 @@ LINK_ERR_LOG := dist/link_err.log
 EXEC_LOG := dist/exec.log
 OUTPUT := winzigcc
 
-.PHONY: all clean
+.PHONY: all clean debug
 
 all:
 	@echo "Cleaning up..."
@@ -44,3 +44,8 @@ check_errors:
 	@if [ -s $(LINK_ERR_LOG) ]; then \
 		cat $(LINK_ERR_LOG); \
 	fi
+
+debug:
+	@export DEBUG=1; \
+	$(MAKE) all | sed '/directory/d'; \
+	unset DEBUG

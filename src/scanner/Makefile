@@ -10,7 +10,7 @@ all:
 	$(MAKE) check_error
 
 $(SCAN_TARGETS):
-	-$(CXX) $(SCAN_CPPFLAGS) -c -o $(SCAN_DIST_DIR)/$@.o $@.cpp \
+	-$(CXX) $(SCAN_CPPFLAGS) $(if $(DEBUG),-g) -c -o $(SCAN_DIST_DIR)/$@.o $@.cpp \
 		2>> $(SCAN_ERROR_LOG)
 
 check_error:
