@@ -1,51 +1,8 @@
-#include <iostream>
-#include <array>
-#include <algorithm>
-#include "../include/parser.h"
-#include "parser.h"
-
-#define TOKEN_IN(x) std::find(x.begin(), x.end(), (*nextToken)->getType()) != x.end()
+#include "../../include/parser.h"
+#include "parser_utils.h"
 
 namespace Parser
 {
-
-    std::array<Scanner::TokenType, 3> CaseclauseStart = {
-        Scanner::TokenType::INTEGER,
-        Scanner::TokenType::CHAR,
-        Scanner::TokenType::IDENTIFIER};
-
-    std::array<Scanner::TokenType, 12> ExpressionStart = {
-        Scanner::TokenType::MINUS,
-        Scanner::TokenType::PLUS,
-        Scanner::TokenType::NOT,
-        Scanner::TokenType::EOF_TOKEN,
-        Scanner::TokenType::IDENTIFIER,
-        Scanner::TokenType::INTEGER,
-        Scanner::TokenType::CHAR,
-        Scanner::TokenType::LEFT_PAREN,
-        Scanner::TokenType::SUCC,
-        Scanner::TokenType::PRED,
-        Scanner::TokenType::CHR,
-        Scanner::TokenType::ORD};
-
-    std::array<Scanner::TokenType, 6> ComparisonOperators = {
-        Scanner::TokenType::LESS_THAN_EQUAL,
-        Scanner::TokenType::LESS_THAN,
-        Scanner::TokenType::GREATER_THAN_EQUAL,
-        Scanner::TokenType::GREATER_THAN,
-        Scanner::TokenType::EQUAL,
-        Scanner::TokenType::NOT_EQUAL};
-
-    std::array<Scanner::TokenType, 3> AddOperators = {
-        Scanner::TokenType::PLUS,
-        Scanner::TokenType::MINUS,
-        Scanner::TokenType::OR};
-
-    std::array<Scanner::TokenType, 4> MulOperators = {
-        Scanner::TokenType::MULTIPLY,
-        Scanner::TokenType::DIVIDE,
-        Scanner::TokenType::AND,
-        Scanner::TokenType::MOD};
 
     Parser::Parser(std::vector<Scanner::Token *> &tokens) : tokens(tokens), nextToken(tokens.begin())
     {
