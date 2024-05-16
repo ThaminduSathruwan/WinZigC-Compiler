@@ -2,6 +2,8 @@
 #define SCANMGR_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "scanner.h"
 
 namespace Scanner
@@ -10,9 +12,12 @@ namespace Scanner
     {
     public:
         ScanMgr();
+        // void processFile(const std::string &filename);
+        void processFile();
+        ~ScanMgr();
 
     private:
-        Scanner scanner;
+        Scanner scanner(const std::vector<std::string> &inputLines);
     };
 }
 
