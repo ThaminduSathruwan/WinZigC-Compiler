@@ -6,7 +6,7 @@
 #include <stack>
 #include "token.h"
 
-namespace parser
+namespace Parser
 {
     typedef enum ASTNodeType
     {
@@ -64,9 +64,11 @@ namespace parser
         ID,
         INT,
         CHAR,
+        STR,
         ID_VAL,
         INT_VAL,
-        CHAR_VAL
+        CHAR_VAL,
+        STR_VAL
     } ASTNodeType;
 
     typedef struct ast_node
@@ -89,7 +91,7 @@ namespace parser
         AST();
         ~AST();
         void build_tree(ASTNodeType type, int childrenCnt);
-        void build_tree(std::string identifier);
+        void build_tree(std::string str, bool identifier = true);
         void build_tree(int32_t integer);
         void build_tree(char character);
         friend std::ostream &operator<<(std::ostream &os, const AST &ast);
@@ -124,6 +126,14 @@ namespace parser
         char character;
         virtual std::string toString() const override;
     } CharacterVal;
+
+    typedef struct str_node : public ast_node
+    {
+        str_node(std::string str);
+        virtual ~str_node();
+        std::string str;
+        virtual std::string toString() const override;
+    } StringVal;
 }
 
 #endif // !AST_H

@@ -4,7 +4,7 @@
 #include "../../include/token.h"
 #include "../../include/ast.h"
 
-namespace parser
+namespace Parser
 {
 
     ASTNode::ast_node(ASTNodeType type, uint32_t childrenCnt) : type(type), childrenCnt(childrenCnt), first_child(nullptr), next_sibling(nullptr)
@@ -182,6 +182,9 @@ namespace parser
         case CHAR:
             typeStr = "<character>";
             break;
+        case STR:
+            typeStr = "<string>";
+            break;
         default:
             typeStr = "<unknown>";
             break;
@@ -213,9 +216,17 @@ namespace parser
         node_stack.push(node);
     }
 
-    void AST::build_tree(std::string identifier)
+    void AST::build_tree(std::string str, bool identifier)
     {
-        ASTNode *node = new IdentifierVal(identifier);
+        ASTNode *node = nullptr;
+        if (identifier)
+        {
+            node = new IdentifierVal(str);
+        }
+        else
+        {
+            node = new StringVal(str);
+        }
         node_stack.push(node);
     }
 
@@ -303,6 +314,19 @@ namespace parser
     std::string CharacterVal::toString() const
     {
         return "'" + std::string(1, character) + "'(0)";
+    }
+
+    StringVal::str_node(std::string str) : ast_node(STR_VAL, 0), str(str)
+    {
+    }
+
+    StringVal::~str_node()
+    {
+    }
+
+    std::string StringVal::toString() const
+    {
+        return "\"" + str + "\"(0)";
     }
 
 }

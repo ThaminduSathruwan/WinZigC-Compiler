@@ -16,7 +16,6 @@ namespace WinZigCC
 
     private:
         Scanner::ScanMgr scanMgr;
-        Parser::ParseMgr parseMgr;
         Compiler::CompileMgr compileMgr;
         const std::string &program;
     };

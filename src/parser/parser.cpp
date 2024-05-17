@@ -1,4 +1,6 @@
+#include "../../include/parsemgr.h"
 #include "../../include/parser.h"
+#include "../../include/ast.h"
 #include "parser_utils.h"
 
 namespace Parser
@@ -49,21 +51,27 @@ namespace Parser
         parseBody();
         parseName();
         readToken(Scanner::TokenType::PERIOD);
+        BUILD_TREE(ASTNodeType::PROGRAM, 7);
     }
 
     void Parser::parseConsts()
     {
+
+        int i = 0;
         if ((*nextToken)->getType() == Scanner::TokenType::CONST)
         {
             readToken(Scanner::TokenType::CONST);
             parseConst();
+            ++i;
             while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
             {
                 readToken(Scanner::TokenType::COMMA);
                 parseConst();
+                ++i;
             }
             readToken(Scanner::TokenType::SEMICOLON);
         }
+        BUILD_TREE(ASTNodeType::CONSTS, i);
     }
 
     void Parser::parseConst()
@@ -71,17 +79,23 @@ namespace Parser
         parseName();
         readToken(Scanner::TokenType::EQUAL);
         parseConstValue();
+        BUILD_TREE(ASTNodeType::CONST, 2);
     }
 
     void Parser::parseConstValue()
     {
+        Scanner::Token *t;
         switch ((*nextToken)->getType())
         {
         case Scanner::TokenType::INTEGER:
-            readToken(Scanner::TokenType::INTEGER);
+            t = readToken(Scanner::TokenType::INTEGER);
+            ParseMgr::Instance().getAST().build_tree(std::stoi(t->getData()));
+            BUILD_TREE(ASTNodeType::INT_VAL, 1);
             break;
         case Scanner::TokenType::CHAR:
-            readToken(Scanner::TokenType::CHAR);
+            t = readToken(Scanner::TokenType::CHAR);
+            ParseMgr::Instance().getAST().build_tree(t->getData()[0]);
+            BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
             break;
         case Scanner::TokenType::IDENTIFIER:
             parseName();
@@ -94,17 +108,21 @@ namespace Parser
 
     void Parser::parseTypes()
     {
+        int i = 0;
         if ((*nextToken)->getType() == Scanner::TokenType::TYPE)
         {
             readToken(Scanner::TokenType::TYPE);
             parseType();
+            ++i;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
                 parseType();
+                ++i;
             }
             readToken(Scanner::TokenType::SEMICOLON);
         }
+        BUILD_TREE(ASTNodeType::TYPES, i);
     }
 
     void Parser::parseType()
@@ -112,26 +130,32 @@ namespace Parser
         parseName();
         readToken(Scanner::TokenType::EQUAL);
         parseLitList();
+        BUILD_TREE(ASTNodeType::TYPE, 2);
     }
 
     void Parser::parseLitList()
     {
         readToken(Scanner::TokenType::LEFT_PAREN);
         parseName();
+        int i = 1;
         while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
         {
             readToken(Scanner::TokenType::COMMA);
             parseName();
+            ++i;
         }
         readToken(Scanner::TokenType::RIGHT_PAREN);
+        BUILD_TREE(ASTNodeType::LIT, i);
     }
 
     void Parser::parseSubProgs()
     {
+        int i = 0;
         while ((*nextToken)->getType() == Scanner::TokenType::FUNCTION)
         {
             parseFcn();
         }
+        BUILD_TREE(ASTNodeType::SUBPROGS, i);
     }
 
     void Parser::parseFcn()
@@ -148,63 +172,81 @@ namespace Parser
         parseTypes();
         parseDclns();
         parseBody();
+        parseName();
         readToken(Scanner::TokenType::SEMICOLON);
+        BUILD_TREE(ASTNodeType::FCN, 8);
     }
 
     void Parser::parseParams()
     {
+        int i = 0;
         if ((*nextToken)->getType() == Scanner::TokenType::IDENTIFIER)
         {
             parseDcln();
+            ++i;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
                 parseDcln();
+                ++i;
             }
         }
+        BUILD_TREE(ASTNodeType::PARAMS, i);
     }
 
     void Parser::parseDclns()
     {
+        int i = 0;
         if ((*nextToken)->getType() == Scanner::TokenType::VAR)
         {
             readToken(Scanner::TokenType::VAR);
             parseDcln();
+            ++i;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
                 parseDcln();
+                ++i;
             }
             readToken(Scanner::TokenType::SEMICOLON);
         }
+        BUILD_TREE(ASTNodeType::DCLNS, i);
     }
 
     void Parser::parseDcln()
     {
         parseName();
+        int i = 1;
         while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
         {
             readToken(Scanner::TokenType::COMMA);
             parseName();
+            ++i;
         }
         readToken(Scanner::TokenType::COLON);
         parseName();
+        ++i;
+        BUILD_TREE(ASTNodeType::VAR, i);
     }
 
     void Parser::parseBody()
     {
         readToken(Scanner::TokenType::BEGIN);
         parseStatement();
+        int i = 1;
         while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
         {
             readToken(Scanner::TokenType::SEMICOLON);
             parseStatement();
+            ++i;
         }
         readToken(Scanner::TokenType::END);
+        BUILD_TREE(ASTNodeType::BLOCK, i);
     }
 
     void Parser::parseStatement()
     {
+        int i;
         switch ((*nextToken)->getType())
         {
         case Scanner::TokenType::IDENTIFIER:
@@ -214,12 +256,15 @@ namespace Parser
             readToken(Scanner::TokenType::OUTPUT);
             readToken(Scanner::TokenType::LEFT_PAREN);
             parseOutExp();
+            i = 1;
             while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
             {
                 readToken(Scanner::TokenType::COMMA);
                 parseOutExp();
+                ++i;
             }
             readToken(Scanner::TokenType::RIGHT_PAREN);
+            BUILD_TREE(ASTNodeType::OUTPUT, i);
             break;
         case Scanner::TokenType::IF:
             readToken(Scanner::TokenType::IF);
@@ -230,6 +275,11 @@ namespace Parser
             {
                 readToken(Scanner::TokenType::ELSE);
                 parseStatement();
+                BUILD_TREE(ASTNodeType::IF, 3);
+            }
+            else
+            {
+                BUILD_TREE(ASTNodeType::IF, 2);
             }
             break;
         case Scanner::TokenType::WHILE:
@@ -237,16 +287,22 @@ namespace Parser
             parseExpression();
             readToken(Scanner::TokenType::DO);
             parseStatement();
+            BUILD_TREE(ASTNodeType::WHILE, 2);
             break;
         case Scanner::TokenType::REPEAT:
             readToken(Scanner::TokenType::REPEAT);
             parseStatement();
+            i = 0;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
                 parseStatement();
+                ++i;
             }
             readToken(Scanner::TokenType::UNTIL);
+            parseExpression();
+            ++i;
+            BUILD_TREE(ASTNodeType::REPEAT, i);
             break;
         case Scanner::TokenType::FOR:
             readToken(Scanner::TokenType::FOR);
@@ -258,16 +314,20 @@ namespace Parser
             parseForStat();
             readToken(Scanner::TokenType::RIGHT_PAREN);
             parseStatement();
+            BUILD_TREE(ASTNodeType::FOR, 4);
             break;
         case Scanner::TokenType::LOOP:
             readToken(Scanner::TokenType::LOOP);
             parseStatement();
+            i = 1;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
                 parseStatement();
+                ++i;
             }
             readToken(Scanner::TokenType::POOL);
+            BUILD_TREE(ASTNodeType::LOOP, i);
             break;
         case Scanner::TokenType::CASE:
             readToken(Scanner::TokenType::CASE);
@@ -276,25 +336,31 @@ namespace Parser
             parseCaseclauses();
             parseOtherwiseClause();
             readToken(Scanner::TokenType::END);
+            BUILD_TREE(ASTNodeType::CASE, 3);
             break;
         case Scanner::TokenType::READ:
             readToken(Scanner::TokenType::READ);
             readToken(Scanner::TokenType::LEFT_PAREN);
             parseName();
+            i = 1;
             while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
             {
                 readToken(Scanner::TokenType::COMMA);
                 parseName();
+                ++i;
             }
             readToken(Scanner::TokenType::RIGHT_PAREN);
+            BUILD_TREE(ASTNodeType::READ, i);
             break;
         case Scanner::TokenType::EXIT:
             readToken(Scanner::TokenType::EXIT);
+            BUILD_TREE(ASTNodeType::EXIT, 0);
             break;
         case Scanner::TokenType::BEGIN:
             parseBody();
             break;
         default:
+            BUILD_TREE(ASTNodeType::NULL_, 0);
             break;
         }
     }
@@ -304,16 +370,19 @@ namespace Parser
         if ((*nextToken)->getType() == Scanner::TokenType::STRING)
         {
             parseStringNode();
+            BUILD_TREE(ASTNodeType::STRING, 1);
         }
         else
         {
             parseExpression();
+            BUILD_TREE(ASTNodeType::INTEGER, 1);
         }
     }
 
     void Parser::parseStringNode()
     {
-        readToken(Scanner::TokenType::STRING);
+        Scanner::Token *t = readToken(Scanner::TokenType::STRING);
+        ParseMgr::Instance().getAST().build_tree(t->getData(), false);
     }
 
     void Parser::parseCaseclauses()
@@ -330,13 +399,17 @@ namespace Parser
     void Parser::parseCaseclause()
     {
         parseCaseExpression();
+        int i = 1;
         while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
         {
             readToken(Scanner::TokenType::COMMA);
             parseCaseExpression();
+            ++i;
         }
         readToken(Scanner::TokenType::COLON);
         parseStatement();
+        ++i;
+        BUILD_TREE(ASTNodeType::CASE_CLAUSE, i);
     }
 
     void Parser::parseCaseExpression()
@@ -346,6 +419,7 @@ namespace Parser
         {
             readToken(Scanner::TokenType::CASE_DOTS);
             parseConstValue();
+            BUILD_TREE(ASTNodeType::CASE_DOTS, 2);
         }
     }
 
@@ -355,6 +429,7 @@ namespace Parser
         {
             readToken(Scanner::TokenType::OTHERWISE);
             parseStatement();
+            BUILD_TREE(ASTNodeType::OTHERWISE, 1);
         }
     }
 
@@ -366,10 +441,12 @@ namespace Parser
         case Scanner::TokenType::ASSIGN:
             readToken(Scanner::TokenType::ASSIGN);
             parseExpression();
+            BUILD_TREE(ASTNodeType::ASSIGN, 2);
             break;
         case Scanner::TokenType::SWAP:
             readToken(Scanner::TokenType::SWAP);
             parseName();
+            BUILD_TREE(ASTNodeType::SWAP, 2);
             break;
         default:
             errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
@@ -383,6 +460,10 @@ namespace Parser
         {
             parseAssignment();
         }
+        else
+        {
+            BUILD_TREE(ASTNodeType::NULL_, 0);
+        }
     }
 
     void Parser::parseForExp()
@@ -391,6 +472,10 @@ namespace Parser
         {
             parseExpression();
         }
+        else
+        {
+            BUILD_TREE(ASTNodeType::TRUE, 0);
+        }
     }
 
     void Parser::parseExpression()
@@ -398,8 +483,41 @@ namespace Parser
         parseTerm();
         if (TOKEN_IN(ComparisonOperators))
         {
-            readToken((*nextToken)->getType());
-            parseTerm();
+            switch ((*nextToken)->getType())
+            {
+            case Scanner::TokenType::LESS_THAN_EQUAL:
+                readToken(Scanner::TokenType::LESS_THAN_EQUAL);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::LEQ, 2);
+                break;
+            case Scanner::TokenType::LESS_THAN:
+                readToken(Scanner::TokenType::LESS_THAN);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::LT, 2);
+                break;
+            case Scanner::TokenType::GREATER_THAN_EQUAL:
+                readToken(Scanner::TokenType::GREATER_THAN_EQUAL);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::GEQ, 2);
+                break;
+            case Scanner::TokenType::GREATER_THAN:
+                readToken(Scanner::TokenType::GREATER_THAN);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::GT, 2);
+                break;
+            case Scanner::TokenType::EQUAL:
+                readToken(Scanner::TokenType::EQUAL);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::EQ, 2);
+                break;
+            case Scanner::TokenType::NOT_EQUAL:
+                readToken(Scanner::TokenType::NOT_EQUAL);
+                parseTerm();
+                BUILD_TREE(ASTNodeType::NEQ, 2);
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -408,8 +526,26 @@ namespace Parser
         parseFactor();
         while (TOKEN_IN(AddOperators))
         {
-            readToken((*nextToken)->getType());
-            parseFactor();
+            switch ((*nextToken)->getType())
+            {
+            case Scanner::TokenType::PLUS:
+                readToken(Scanner::TokenType::PLUS);
+                parseFactor();
+                BUILD_TREE(ASTNodeType::PLUS, 2);
+                break;
+            case Scanner::TokenType::MINUS:
+                readToken(Scanner::TokenType::MINUS);
+                parseFactor();
+                BUILD_TREE(ASTNodeType::NEG, 2);
+                break;
+            case Scanner::TokenType::OR:
+                readToken(Scanner::TokenType::OR);
+                parseFactor();
+                BUILD_TREE(ASTNodeType::OR, 2);
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -418,18 +554,43 @@ namespace Parser
         parsePrimary();
         while (TOKEN_IN(MulOperators))
         {
-            readToken((*nextToken)->getType());
-            parsePrimary();
+            switch ((*nextToken)->getType())
+            {
+            case Scanner::TokenType::MULTIPLY:
+                readToken(Scanner::TokenType::MULTIPLY);
+                parsePrimary();
+                BUILD_TREE(ASTNodeType::MUL, 2);
+                break;
+            case Scanner::TokenType::DIVIDE:
+                readToken(Scanner::TokenType::DIVIDE);
+                parsePrimary();
+                BUILD_TREE(ASTNodeType::DIV, 2);
+                break;
+            case Scanner::TokenType::AND:
+                readToken(Scanner::TokenType::AND);
+                parsePrimary();
+                BUILD_TREE(ASTNodeType::AND, 2);
+                break;
+            case Scanner::TokenType::MOD:
+                readToken(Scanner::TokenType::MOD);
+                parsePrimary();
+                BUILD_TREE(ASTNodeType::MOD, 2);
+                break;
+            default:
+                break;
+            }
         }
     }
 
     void Parser::parsePrimary()
     {
+        Scanner::Token *t;
         switch ((*nextToken)->getType())
         {
         case Scanner::TokenType::MINUS:
             readToken(Scanner::TokenType::MINUS);
             parsePrimary();
+            BUILD_TREE(ASTNodeType::NEG, 1);
             break;
         case Scanner::TokenType::PLUS:
             readToken(Scanner::TokenType::PLUS);
@@ -438,9 +599,11 @@ namespace Parser
         case Scanner::TokenType::NOT:
             readToken(Scanner::TokenType::NOT);
             parsePrimary();
+            BUILD_TREE(ASTNodeType::NOT, 1);
             break;
         case Scanner::TokenType::EOF_TOKEN:
             readToken(Scanner::TokenType::EOF_TOKEN);
+            BUILD_TREE(ASTNodeType::EOF_, 0);
             break;
         case Scanner::TokenType::IDENTIFIER:
             parseName();
@@ -448,19 +611,26 @@ namespace Parser
             {
                 readToken(Scanner::TokenType::LEFT_PAREN);
                 parseExpression();
+                int i = 1;
                 while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
                 {
                     readToken(Scanner::TokenType::COMMA);
                     parseExpression();
+                    ++i;
                 }
                 readToken(Scanner::TokenType::RIGHT_PAREN);
+                BUILD_TREE(ASTNodeType::CALL, i);
             }
             break;
         case Scanner::TokenType::INTEGER:
-            readToken(Scanner::TokenType::INTEGER);
+            t = readToken(Scanner::TokenType::INTEGER);
+            ParseMgr::Instance().getAST().build_tree(std::stoi(t->getData()));
+            BUILD_TREE(ASTNodeType::INT_VAL, 1);
             break;
         case Scanner::TokenType::CHAR:
-            readToken(Scanner::TokenType::CHAR);
+            t = readToken(Scanner::TokenType::CHAR);
+            ParseMgr::Instance().getAST().build_tree(t->getData()[0]);
+            BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
             break;
         case Scanner::TokenType::LEFT_PAREN:
             ExtractParenthesizedExpression();
@@ -468,18 +638,22 @@ namespace Parser
         case Scanner::TokenType::SUCC:
             readToken(Scanner::TokenType::SUCC);
             ExtractParenthesizedExpression();
+            BUILD_TREE(ASTNodeType::SUCC, 1);
             break;
         case Scanner::TokenType::PRED:
             readToken(Scanner::TokenType::PRED);
             ExtractParenthesizedExpression();
+            BUILD_TREE(ASTNodeType::PRED, 1);
             break;
         case Scanner::TokenType::CHR:
             readToken(Scanner::TokenType::CHR);
             ExtractParenthesizedExpression();
+            BUILD_TREE(ASTNodeType::CHR, 1);
             break;
         case Scanner::TokenType::ORD:
             readToken(Scanner::TokenType::ORD);
             ExtractParenthesizedExpression();
+            BUILD_TREE(ASTNodeType::ORD, 1);
             break;
         default:
             errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
@@ -489,7 +663,9 @@ namespace Parser
 
     void Parser::parseName()
     {
-        readToken(Scanner::TokenType::IDENTIFIER);
+        Scanner::Token *t = readToken(Scanner::TokenType::IDENTIFIER);
+        ParseMgr::Instance().getAST().build_tree(t->getData());
+        BUILD_TREE(ASTNodeType::ID, 1);
     }
 
     void Parser::ExtractParenthesizedExpression()

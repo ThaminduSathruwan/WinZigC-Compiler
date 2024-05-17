@@ -9,10 +9,6 @@ class Singleton
 public:
     static T &Instance()
     {
-        if (!instance)
-        {
-            instance = new T();
-        }
         return instance;
     }
 

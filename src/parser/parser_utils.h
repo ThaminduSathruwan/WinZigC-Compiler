@@ -4,9 +4,11 @@
 #include <iostream>
 #include <array>
 #include <algorithm>
+#include "../../include/parsemgr.h"
 #include "../../include/token.h"
 
 #define TOKEN_IN(x) std::find(x.begin(), x.end(), (*nextToken)->getType()) != x.end()
+#define BUILD_TREE(type, children_count) ParseMgr::Instance().getAST().build_tree(type, children_count)
 
 namespace Parser
 {
