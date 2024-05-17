@@ -389,7 +389,7 @@ namespace Parser
     {
         parseCaseclause();
         readToken(Scanner::TokenType::SEMICOLON);
-        while (TOKEN_IN(CaseclauseStart))
+        while (TOKEN_IN(CaseclauseSelectSet))
         {
             parseCaseclause();
             readToken(Scanner::TokenType::SEMICOLON);
@@ -468,7 +468,7 @@ namespace Parser
 
     void Parser::parseForExp()
     {
-        if (TOKEN_IN(ExpressionStart))
+        if (TOKEN_IN(ExpressionSelectSet))
         {
             parseExpression();
         }

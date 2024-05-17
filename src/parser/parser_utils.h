@@ -12,12 +12,12 @@
 
 namespace Parser
 {
-    std::array<Scanner::TokenType, 3> CaseclauseStart = {
+    std::array<Scanner::TokenType, 3> CaseclauseSelectSet = {
         Scanner::TokenType::INTEGER,
         Scanner::TokenType::CHAR,
         Scanner::TokenType::IDENTIFIER};
 
-    std::array<Scanner::TokenType, 12> ExpressionStart = {
+    std::array<Scanner::TokenType, 12> ExpressionSelectSet = {
         Scanner::TokenType::MINUS,
         Scanner::TokenType::PLUS,
         Scanner::TokenType::NOT,
