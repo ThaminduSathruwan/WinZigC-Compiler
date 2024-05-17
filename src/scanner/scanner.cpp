@@ -14,15 +14,18 @@ namespace Scanner
 
         while (vPos < inputLines.size())
         {
-            const std::string &line = inputLines[vPos];
+            // const std::string &line = inputLines[vPos];
             // std::cout << "Incoming String: " << line << std::endl; // Print each string from the array.
 
-            while (hPos < line.size())
+            while (hPos < inputLines[vPos].size())
             {
+
+                const std::string &line = inputLines[vPos];
+
+                // std::cout << "current hPos char" << line[hPos] << std::endl;
                 std::string identifierToken = findIdentifierOrPredefineToken();
 
                 if (!identifierToken.empty())
-                    std::cout << "if condition: " << identifierToken << std::endl;
                 {
                     if (identifierToken == "program")
                     {
@@ -166,7 +169,6 @@ namespace Scanner
                     }
                     else
                     {
-                        std::cout << "if condition in else: " << identifierToken << std::endl;
                         tokens.push_back(new Token(TokenType::IDENTIFIER, identifierToken, hPos - identifierToken.size() + 1, vPos));
                     }
                 }
@@ -366,6 +368,7 @@ namespace Scanner
             }
             multiLineComment.append(inputLines[vPos]);
             vPos++;
+            hPos = 0;
         }
         return multiLineComment;
     }
