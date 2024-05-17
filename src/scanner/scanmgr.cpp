@@ -15,7 +15,7 @@ namespace Scanner
     void ScanMgr::processFile()
     {
         // Hardcoded file path
-        std::string filename = "/home/thamindu/CSE/WinZigC-Compiler/tests/frontend/programs/winzig_01";
+        std::string filename = "/home/thamindu/CSE/WinZigC-Compiler/tests/frontend/programs/winzig_02";
 
         std::ifstream file(filename);
         if (!file)
