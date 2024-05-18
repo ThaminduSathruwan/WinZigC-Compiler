@@ -12,7 +12,11 @@ namespace Parser
     {
     public:
         void runParser(std::vector<Scanner::Token *> &tokens);
-        AST &getAST() { return ast; }
+        void printAST(std::ostream &os);
+        void build_tree(ASTNodeType type, int childrenCnt);
+        void build_tree(std::string str, bool identifier = true);
+        void build_tree(int32_t integer);
+        void build_tree(char character);
         friend class Singleton<ParseMgr>;
 
     private:

@@ -89,12 +89,12 @@ namespace Parser
         {
         case Scanner::TokenType::INTEGER:
             t = readToken(Scanner::TokenType::INTEGER);
-            ParseMgr::Instance().getAST().build_tree(std::stoi(t->getData()));
+            ParseMgr::Instance().build_tree(std::stoi(t->getData()));
             BUILD_TREE(ASTNodeType::INT_VAL, 1);
             break;
         case Scanner::TokenType::CHAR:
             t = readToken(Scanner::TokenType::CHAR);
-            ParseMgr::Instance().getAST().build_tree(t->getData()[0]);
+            ParseMgr::Instance().build_tree(t->getData()[0]);
             BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
             break;
         case Scanner::TokenType::IDENTIFIER:
@@ -382,7 +382,7 @@ namespace Parser
     void Parser::parseStringNode()
     {
         Scanner::Token *t = readToken(Scanner::TokenType::STRING);
-        ParseMgr::Instance().getAST().build_tree(t->getData(), false);
+        ParseMgr::Instance().build_tree(t->getData(), false);
     }
 
     void Parser::parseCaseclauses()
@@ -624,12 +624,12 @@ namespace Parser
             break;
         case Scanner::TokenType::INTEGER:
             t = readToken(Scanner::TokenType::INTEGER);
-            ParseMgr::Instance().getAST().build_tree(std::stoi(t->getData()));
+            ParseMgr::Instance().build_tree(std::stoi(t->getData()));
             BUILD_TREE(ASTNodeType::INT_VAL, 1);
             break;
         case Scanner::TokenType::CHAR:
             t = readToken(Scanner::TokenType::CHAR);
-            ParseMgr::Instance().getAST().build_tree(t->getData()[0]);
+            ParseMgr::Instance().build_tree(t->getData()[0]);
             BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
             break;
         case Scanner::TokenType::LEFT_PAREN:
@@ -664,7 +664,7 @@ namespace Parser
     void Parser::parseName()
     {
         Scanner::Token *t = readToken(Scanner::TokenType::IDENTIFIER);
-        ParseMgr::Instance().getAST().build_tree(t->getData());
+        ParseMgr::Instance().build_tree(t->getData());
         BUILD_TREE(ASTNodeType::ID, 1);
     }
 
