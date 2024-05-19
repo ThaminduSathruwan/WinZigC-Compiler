@@ -15,7 +15,7 @@ namespace Scanner
         while (vPos < inputLines.size())
         {
             // const std::string &line = inputLines[vPos];
-            // std::cout << "Incoming String: " << line << std::endl; // Print each string from the array.
+            // std::cout << "Incoming String: " << inputLines[vPos] << std::endl; // Print each string from the array.
 
             while (hPos < inputLines[vPos].size())
             {
@@ -327,7 +327,7 @@ namespace Scanner
                     hPos += 1;
                 }
 
-                std::string singleLineComment = findSingleLineComment();
+                std::string singleLineComment = findSingleLineComment(line.size());
 
                 std::string multiLineComment = findMultiLineComment();
 
@@ -342,12 +342,12 @@ namespace Scanner
         return tokens;
     }
 
-    std::string Scanner::findSingleLineComment()
+    std::string Scanner::findSingleLineComment(unsigned int size)
     {
         int start = hPos;
         if (getCurrentChar() == '#')
         {
-            while (getCurrentChar() != '\n')
+            while (hPos < size)
             {
                 hPos++;
             }
@@ -358,19 +358,29 @@ namespace Scanner
 
     std::string Scanner::findMultiLineComment()
     {
-        std::string multiLineComment = "";
         if (getCurrentChar() == '{')
         {
-            while (getCurrentChar() != '}')
+            while (vPos < inputLines.size() && getCurrentChar() != '}')
             {
-                multiLineComment.append(inputLines[vPos]);
-                vPos++;
+                while (hPos < inputLines[vPos].length())
+                {
+                    if (getCurrentChar() == '}')
+                    {
+                        break;
+                    }
+                    else
+                        hPos++;
+                }
+                if (getCurrentChar() != '}')
+                {
+                    vPos++;
+                    hPos = 0;
+                }
             }
-            multiLineComment.append(inputLines[vPos]);
             vPos++;
             hPos = 0;
         }
-        return multiLineComment;
+        return "";
     }
 
     std::string Scanner::findNewLine()
@@ -426,8 +436,10 @@ namespace Scanner
         if (getCurrentChar() == '\"')
         {
             hPos++;
-            while (getCurrentChar() != '\"')
+            while (hPos < inputLines[vPos] && getCurrentChar() != '\"')
             {
+                if (getCurrentChar() == '\n')
+                    break;
                 hPos++;
             }
             hPos++;

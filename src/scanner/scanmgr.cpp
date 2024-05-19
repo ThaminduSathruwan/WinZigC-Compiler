@@ -15,7 +15,7 @@ namespace Scanner
     void ScanMgr::processFile()
     {
         // Hardcoded file path
-        std::string filename = "/home/thamindu/CSE/WinZigC-Compiler/tests/frontend/programs/winzig_05";
+        std::string filename = "/home/thamindu/CSE/WinZigC-Compiler/tests/frontend/programs/winzig_11";
 
         std::ifstream file(filename);
         if (!file)
@@ -45,7 +45,8 @@ namespace Scanner
 
         for (Token *token : tokens)
         {
-            std::cout << "Token Type: " << token->getType() << ", Data: " << token->getData() << std::endl;
+            // std::cout << "Token Type: " << token->getType() << ", Data: " << token->getData() << std::endl;
+            std::cout << token->getData() << std::endl;
         }
 
         // Cleanup memory

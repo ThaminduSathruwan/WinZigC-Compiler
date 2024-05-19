@@ -25,7 +25,7 @@ namespace Scanner
         char getCharFromShiftPosition(int shift);              // Helper function to get char in a position by giving shift to current position
         bool isCharInSet(char ch, const std::string &charSet); // Helper function to check if character is in the character set
         std::string findIdentifierOrPredefineToken();          // function to find identifier or pre-define token
-        std::string findSingleLineComment();                   // function to find single line comment
+        std::string findSingleLineComment(unsigned int size);  // function to find single line comment
         std::string findMultiLineComment();                    // function to find multi line comment
         std::string findNewLine();                             // function find new line
         std::string findInteger();                             // function to find integer
