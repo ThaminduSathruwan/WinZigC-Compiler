@@ -52,15 +52,16 @@ namespace Parser
 
     void ParseMgr::addError(Scanner::Token *token, bool end)
     {
-        errors.push_back(SyntaxError(token, end));
+        errors.insert(SyntaxError(token, end));
     }
 
     bool ParseMgr::printErrors(std::ostream &os)
     {
         if (errors.size() > 0)
         {
-            for (auto &error : errors)
+            for (auto it = errors.begin(); it != errors.end(); it++)
             {
+                SyntaxError error = *it;
                 os << error << std::endl;
                 if (!error.isEnd() && error.getToken() != nullptr)
                 {
@@ -76,7 +77,12 @@ namespace Parser
                     {
                         os << " ";
                     }
-                    os << "^" << std::endl;
+                    os << "^";
+                    for (int i = 1; i < (int)error.getToken()->getData().size(); ++i)
+                    {
+                        os << "~";
+                    }
+                    os << std::endl;
                 }
             }
             return true;

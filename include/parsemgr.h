@@ -2,6 +2,7 @@
 #define PARSEMGR_H
 
 #include <iostream>
+#include <set>
 #include "ast.h"
 #include "parser.h"
 #include "syntax_error.h"
@@ -25,7 +26,7 @@ namespace Parser
     private:
         ParseMgr() = default;
         AST ast;
-        std::vector<SyntaxError> errors;
+        std::set<SyntaxError> errors;
         bool printErrors(std::ostream &os);
     };
 }

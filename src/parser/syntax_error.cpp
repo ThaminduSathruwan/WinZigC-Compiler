@@ -37,4 +37,20 @@ namespace Parser
         return end;
     }
 
+    bool SyntaxError::operator<(const SyntaxError &error) const
+    {
+        Scanner::Location loc1 = token->getLocation();
+        Scanner::Location loc2 = error.token->getLocation();
+        if (loc1.second < loc2.second)
+            return true;
+        else if (loc1.second == loc2.second)
+            return loc1.first < loc2.first;
+        return false;
+    }
+
+    bool SyntaxError::operator==(const SyntaxError &error) const
+    {
+        return token == error.token;
+    }
+
 }

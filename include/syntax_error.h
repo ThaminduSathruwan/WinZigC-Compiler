@@ -15,6 +15,8 @@ namespace Parser
         ~SyntaxError();
         Scanner::Token *getToken();
         bool isEnd() const;
+        bool operator<(const SyntaxError &error) const;
+        bool operator==(const SyntaxError &error) const;
         friend std::ostream &operator<<(std::ostream &os, const SyntaxError &error);
 
     private:

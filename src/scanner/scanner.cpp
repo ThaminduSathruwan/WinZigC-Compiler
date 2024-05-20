@@ -192,7 +192,7 @@ namespace Scanner
                 }
 
                 // swap
-                if (getCurrentChar() == ':' && getCharFromShiftPosition(1) == '=' && getCharFromShiftPosition('2') == ':')
+                if (getCurrentChar() == ':' && getCharFromShiftPosition(1) == '=' && getCharFromShiftPosition(2) == ':')
                 {
                     ADD_TOKEN(new Token(TokenType::SWAP, line.substr(hPos, 3), hPos, vPos));
                     hPos += 3;
