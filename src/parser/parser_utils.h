@@ -32,15 +32,6 @@ namespace Parser
         Scanner::TokenType::CHR,
         Scanner::TokenType::ORD};
 
-    std::array<Scanner::TokenType, 3> TypesFollowSet = {
-        Scanner::TokenType::VAR,
-        Scanner::TokenType::FUNCTION,
-        Scanner::TokenType::BEGIN};
-
-    std::array<Scanner::TokenType, 2> DclnsFollowSet = {
-        Scanner::TokenType::BEGIN,
-        Scanner::TokenType::FUNCTION};
-
     std::array<Scanner::TokenType, 6> ComparisonOperators = {
         Scanner::TokenType::LESS_THAN_EQUAL,
         Scanner::TokenType::LESS_THAN,

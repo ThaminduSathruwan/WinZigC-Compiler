@@ -121,7 +121,7 @@ namespace Parser
             parseType();
             readToken(Scanner::TokenType::SEMICOLON);
             ++i;
-            while (!(TOKEN_IN(TypesFollowSet)))
+            while ((*nextToken)->getType() == Scanner::TokenType::IDENTIFIER)
             {
                 parseType();
                 readToken(Scanner::TokenType::SEMICOLON);
@@ -206,7 +206,7 @@ namespace Parser
             parseDcln();
             readToken(Scanner::TokenType::SEMICOLON);
             ++i;
-            while (!(TOKEN_IN(DclnsFollowSet)))
+            while ((*nextToken)->getType() == Scanner::TokenType::IDENTIFIER)
             {
                 parseDcln();
                 readToken(Scanner::TokenType::SEMICOLON);
