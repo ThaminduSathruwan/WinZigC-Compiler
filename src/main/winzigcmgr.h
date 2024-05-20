@@ -11,12 +11,10 @@ namespace WinZigCC
     class WinZigCMgr
     {
     public:
-        WinZigCMgr(const std::string &program);
-        void run();
+        WinZigCMgr();
+        bool run();
 
     private:
-        Scanner::ScanMgr scanMgr;
-        Parser::ParseMgr parseMgr;
         Compiler::CompileMgr compileMgr;
         const std::string &program;
     };

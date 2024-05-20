@@ -1,4 +1,4 @@
-MAIN_TARGETS = main winzigcmgr
+MAIN_TARGETS = main winzigcmgr options
 MAIN_CPPFLAGS := -I../../include -std=c++11 -Wall -Wextra
 MAIN_DIST_DIR = ../../dist/main
 MAIN_SRC_DIR = src\/main\/
