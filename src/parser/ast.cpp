@@ -204,8 +204,12 @@ namespace Parser
     void AST::build_tree(ASTNodeType type, int childrenCnt)
     {
         ASTNode *p = nullptr;
-        for (int i = 1; i < childrenCnt; ++i)
+        for (int i = 0; i < childrenCnt; ++i)
         {
+            if (node_stack.empty())
+            {
+                return;
+            }
             ASTNode *c = node_stack.top();
             node_stack.pop();
             c->next_sibling = p;
@@ -257,7 +261,7 @@ namespace Parser
 
         for (int i = 0; i < depth; ++i)
         {
-            os << ".";
+            os << ". ";
         }
 
         os << node->toString() << std::endl;
@@ -275,6 +279,16 @@ namespace Parser
         delete_tree(node->first_child);
         delete_tree(node->next_sibling);
         delete node;
+    }
+
+    void AST::finalize()
+    {
+        if (node_stack.empty())
+        {
+            return;
+        }
+        root = node_stack.top();
+        node_stack.pop();
     }
 
     IdentifierVal::identifier_node(std::string name) : ast_node(ID_VAL, 0), name(name)

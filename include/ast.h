@@ -94,6 +94,7 @@ namespace Parser
         void build_tree(std::string str, bool identifier = true);
         void build_tree(int32_t integer);
         void build_tree(char character);
+        void finalize();
         friend std::ostream &operator<<(std::ostream &os, const AST &ast);
 
     private:

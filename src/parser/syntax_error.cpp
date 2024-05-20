@@ -13,7 +13,6 @@ namespace Parser
 
     SyntaxError::~SyntaxError()
     {
-        delete token;
     }
 
     std::ostream &operator<<(std::ostream &os, const SyntaxError &error)

@@ -17,6 +17,7 @@ namespace Parser
         void build_tree(std::string str, bool identifier = true);
         void build_tree(int32_t integer);
         void build_tree(char character);
+        void finalizeAST();
         friend class Singleton<ParseMgr>;
 
     private:

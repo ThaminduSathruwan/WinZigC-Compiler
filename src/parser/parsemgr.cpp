@@ -36,4 +36,9 @@ namespace Parser
         ast.build_tree(character);
     }
 
+    void ParseMgr::finalizeAST()
+    {
+        ast.finalize();
+    }
+
 }

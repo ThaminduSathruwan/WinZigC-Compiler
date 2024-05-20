@@ -3,6 +3,10 @@
 #include "../../include/ast.h"
 #include "parser_utils.h"
 
+template <typename T>
+T Singleton<T>::instance;
+template class Singleton<Parser::ParseMgr>;
+
 namespace Parser
 {
 
@@ -22,6 +26,7 @@ namespace Parser
     {
         nextToken = tokens.begin();
         parseWinzig();
+        ParseMgr::Instance().finalizeAST();
     }
 
     Scanner::Token *Parser::readToken(Scanner::TokenType type)
@@ -36,7 +41,7 @@ namespace Parser
             errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
             return nullptr;
         }
-        return *nextToken++;
+        return *(nextToken++);
     }
 
     void Parser::parseWinzig()
@@ -89,13 +94,19 @@ namespace Parser
         {
         case Scanner::TokenType::INTEGER:
             t = readToken(Scanner::TokenType::INTEGER);
-            ParseMgr::Instance().build_tree(std::stoi(t->getData()));
-            BUILD_TREE(ASTNodeType::INT_VAL, 1);
+            if (t != nullptr)
+            {
+                ParseMgr::Instance().build_tree(std::stoi(t->getData()));
+                BUILD_TREE(ASTNodeType::INT, 1);
+            }
             break;
         case Scanner::TokenType::CHAR:
             t = readToken(Scanner::TokenType::CHAR);
-            ParseMgr::Instance().build_tree(t->getData()[0]);
-            BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
+            if (t != nullptr)
+            {
+                ParseMgr::Instance().build_tree(t->getData()[0]);
+                BUILD_TREE(ASTNodeType::CHAR, 1);
+            }
             break;
         case Scanner::TokenType::IDENTIFIER:
             parseName();
@@ -154,6 +165,7 @@ namespace Parser
         while ((*nextToken)->getType() == Scanner::TokenType::FUNCTION)
         {
             parseFcn();
+            ++i;
         }
         BUILD_TREE(ASTNodeType::SUBPROGS, i);
     }
@@ -201,14 +213,14 @@ namespace Parser
         {
             readToken(Scanner::TokenType::VAR);
             parseDcln();
+            readToken(Scanner::TokenType::SEMICOLON);
             ++i;
-            while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
+            while ((*nextToken)->getType() != Scanner::TokenType::BEGIN && (*nextToken)->getType() != Scanner::TokenType::FUNCTION)
             {
-                readToken(Scanner::TokenType::SEMICOLON);
                 parseDcln();
+                readToken(Scanner::TokenType::SEMICOLON);
                 ++i;
             }
-            readToken(Scanner::TokenType::SEMICOLON);
         }
         BUILD_TREE(ASTNodeType::DCLNS, i);
     }
@@ -292,7 +304,7 @@ namespace Parser
         case Scanner::TokenType::REPEAT:
             readToken(Scanner::TokenType::REPEAT);
             parseStatement();
-            i = 0;
+            i = 1;
             while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
             {
                 readToken(Scanner::TokenType::SEMICOLON);
@@ -356,6 +368,11 @@ namespace Parser
             readToken(Scanner::TokenType::EXIT);
             BUILD_TREE(ASTNodeType::EXIT, 0);
             break;
+        case Scanner::TokenType::RETURN:
+            readToken(Scanner::TokenType::RETURN);
+            parseExpression();
+            BUILD_TREE(ASTNodeType::RETURN, 1);
+            break;
         case Scanner::TokenType::BEGIN:
             parseBody();
             break;
@@ -382,7 +399,10 @@ namespace Parser
     void Parser::parseStringNode()
     {
         Scanner::Token *t = readToken(Scanner::TokenType::STRING);
-        ParseMgr::Instance().build_tree(t->getData(), false);
+        if (t != nullptr)
+        {
+            ParseMgr::Instance().build_tree(t->getData(), false);
+        }
     }
 
     void Parser::parseCaseclauses()
@@ -611,7 +631,7 @@ namespace Parser
             {
                 readToken(Scanner::TokenType::LEFT_PAREN);
                 parseExpression();
-                int i = 1;
+                int i = 2;
                 while ((*nextToken)->getType() == Scanner::TokenType::COMMA)
                 {
                     readToken(Scanner::TokenType::COMMA);
@@ -624,13 +644,19 @@ namespace Parser
             break;
         case Scanner::TokenType::INTEGER:
             t = readToken(Scanner::TokenType::INTEGER);
-            ParseMgr::Instance().build_tree(std::stoi(t->getData()));
-            BUILD_TREE(ASTNodeType::INT_VAL, 1);
+            if (t != nullptr)
+            {
+                ParseMgr::Instance().build_tree(std::stoi(t->getData()));
+                BUILD_TREE(ASTNodeType::INT, 1);
+            }
             break;
         case Scanner::TokenType::CHAR:
             t = readToken(Scanner::TokenType::CHAR);
-            ParseMgr::Instance().build_tree(t->getData()[0]);
-            BUILD_TREE(ASTNodeType::CHAR_VAL, 1);
+            if (t != nullptr)
+            {
+                ParseMgr::Instance().build_tree(t->getData()[0]);
+                BUILD_TREE(ASTNodeType::CHAR, 1);
+            }
             break;
         case Scanner::TokenType::LEFT_PAREN:
             ExtractParenthesizedExpression();
@@ -664,8 +690,11 @@ namespace Parser
     void Parser::parseName()
     {
         Scanner::Token *t = readToken(Scanner::TokenType::IDENTIFIER);
-        ParseMgr::Instance().build_tree(t->getData());
-        BUILD_TREE(ASTNodeType::ID, 1);
+        if (t != nullptr)
+        {
+            ParseMgr::Instance().build_tree(t->getData());
+            BUILD_TREE(ASTNodeType::ID, 1);
+        }
     }
 
     void Parser::ExtractParenthesizedExpression()
