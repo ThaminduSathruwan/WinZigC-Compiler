@@ -12,7 +12,7 @@ namespace WinZigCC
     {
     public:
         WinZigCMgr();
-        void run();
+        bool run();
 
     private:
         Compiler::CompileMgr compileMgr;

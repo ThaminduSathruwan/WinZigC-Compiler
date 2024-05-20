@@ -9,6 +9,7 @@
 
 #define TOKEN_IN(x) std::find(x.begin(), x.end(), (*nextToken)->getType()) != x.end()
 #define BUILD_TREE(type, children_count) ParseMgr::Instance().build_tree(type, children_count)
+#define SYNTAX_ERROR() ParseMgr::Instance().addError(*nextToken)
 
 namespace Parser
 {

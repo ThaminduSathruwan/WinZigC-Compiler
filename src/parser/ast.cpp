@@ -199,6 +199,7 @@ namespace Parser
     AST::~AST()
     {
         delete_tree(root);
+        delete_stack();
     }
 
     void AST::build_tree(ASTNodeType type, int childrenCnt)
@@ -279,6 +280,15 @@ namespace Parser
         delete_tree(node->first_child);
         delete_tree(node->next_sibling);
         delete node;
+    }
+
+    void AST::delete_stack()
+    {
+        while (!node_stack.empty())
+        {
+            delete node_stack.top();
+            node_stack.pop();
+        }
     }
 
     void AST::finalize()

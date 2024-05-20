@@ -102,6 +102,7 @@ namespace Parser
         std::stack<ASTNode *> node_stack;
         void preorder_traversal(ASTNode *node, int depth, std::ostream &os) const;
         void delete_tree(ASTNode *node);
+        void delete_stack();
     };
 
     typedef struct identifier_node : public ast_node

@@ -11,13 +11,14 @@ namespace Parser
     class SyntaxError
     {
     public:
-        SyntaxError(Scanner::Token *token, std::string message, bool end = false);
+        SyntaxError(Scanner::Token *token, bool end = false);
         ~SyntaxError();
+        Scanner::Token *getToken();
+        bool isEnd() const;
         friend std::ostream &operator<<(std::ostream &os, const SyntaxError &error);
 
     private:
         Scanner::Token *token;
-        std::string message;
         bool end;
     };
 }

@@ -15,15 +15,20 @@ namespace WinZigCC
     {
     }
 
-    void WinZigCMgr::run()
+    bool WinZigCMgr::run()
     {
         // Call the processFile method
         Scanner::ScanMgr::Instance().processFile(program);
         Scanner::ScanMgr::Instance().runScanner();
-        Parser::ParseMgr::Instance().runParser();
+
+        if (!Parser::ParseMgr::Instance().runParser())
+            return false;
+
         if (Options::OptionsMgr::Instance().isPrintAST())
         {
             Parser::ParseMgr::Instance().printAST(std::cout);
         }
+
+        return true;
     }
 }

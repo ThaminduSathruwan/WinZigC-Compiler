@@ -1,6 +1,9 @@
 #include "../../include/parsemgr.h"
 #include "../../include/parser.h"
 #include "../../include/ast.h"
+#include "../../include/syntax_error.h"
+#include "../../include/token.h"
+#include "../../include/scanmgr.h"
 #include "parser_utils.h"
 
 template <typename T>
@@ -25,12 +28,12 @@ namespace Parser
     {
         if (nextToken == tokens.end())
         {
-            errors.push_back(SyntaxError(*nextToken, "Unexpected end of file"));
+            ParseMgr::Instance().addError(*(nextToken - 1), true);
             return nullptr;
         }
         if ((*nextToken)->getType() != type)
         {
-            errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
+            SYNTAX_ERROR();
             return nullptr;
         }
         return *(nextToken++);
@@ -104,7 +107,7 @@ namespace Parser
             parseName();
             break;
         default:
-            errors.push_back(SyntaxError(*nextToken, "Unexpected token in constant declaration"));
+            SYNTAX_ERROR();
             break;
         }
     }
@@ -463,7 +466,7 @@ namespace Parser
             BUILD_TREE(ASTNodeType::SWAP, 2);
             break;
         default:
-            errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
+            SYNTAX_ERROR();
             break;
         }
     }
@@ -676,7 +679,7 @@ namespace Parser
             BUILD_TREE(ASTNodeType::ORD, 1);
             break;
         default:
-            errors.push_back(SyntaxError(*nextToken, "Unexpected token"));
+            SYNTAX_ERROR();
             break;
         }
     }

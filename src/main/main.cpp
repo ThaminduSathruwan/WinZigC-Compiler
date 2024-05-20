@@ -12,12 +12,12 @@ int main(int argc, char *argv[])
     }
 
     if (!Options::OptionsMgr::Instance().setOptions(argc, argv))
-    {
         return 1;
-    }
 
     WinZigCC::WinZigCMgr winZigCMgr;
-    winZigCMgr.run();
+
+    if (!winZigCMgr.run())
+        return 1;
 
     return 0;
 }

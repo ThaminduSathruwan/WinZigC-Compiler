@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "token.h"
-#include "syntax_error.h"
 
 namespace Parser
 {
@@ -52,7 +51,6 @@ namespace Parser
     private:
         std::vector<Scanner::Token *> tokens;
         std::vector<Scanner::Token *>::iterator nextToken;
-        std::vector<SyntaxError> errors;
     };
 
 }

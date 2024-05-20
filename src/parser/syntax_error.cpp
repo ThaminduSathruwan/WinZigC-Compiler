@@ -7,7 +7,7 @@
 namespace Parser
 {
 
-    SyntaxError::SyntaxError(Scanner::Token *token, std::string message, bool end) : token(token), message(message), end(end)
+    SyntaxError::SyntaxError(Scanner::Token *token, bool end) : token(token), end(end)
     {
     }
 
@@ -18,8 +18,23 @@ namespace Parser
     std::ostream &operator<<(std::ostream &os, const SyntaxError &error)
     {
         Scanner::Location loc = error.token->getLocation();
-        os << "Syntax Error: " << error.message << " at line " << loc.first << " column " << loc.second << std::endl;
+        if (error.end)
+        {
+            os << "Syntax Error: " << "Unexpected end of file";
+            return os;
+        }
+        os << "Syntax Error: " << "Unexpected token at line " << loc.second + 1 << " column " << loc.first + 1;
         return os;
+    }
+
+    Scanner::Token *SyntaxError::getToken()
+    {
+        return token;
+    }
+
+    bool SyntaxError::isEnd() const
+    {
+        return end;
     }
 
 }
