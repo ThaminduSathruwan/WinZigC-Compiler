@@ -116,14 +116,14 @@ namespace Parser
         {
             readToken(Scanner::TokenType::TYPE);
             parseType();
+            readToken(Scanner::TokenType::SEMICOLON);
             ++i;
-            while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
+            while (!(TOKEN_IN(TypesFollowSet)))
             {
-                readToken(Scanner::TokenType::SEMICOLON);
                 parseType();
+                readToken(Scanner::TokenType::SEMICOLON);
                 ++i;
             }
-            readToken(Scanner::TokenType::SEMICOLON);
         }
         BUILD_TREE(ASTNodeType::TYPES, i);
     }
@@ -183,17 +183,13 @@ namespace Parser
 
     void Parser::parseParams()
     {
-        int i = 0;
-        if ((*nextToken)->getType() == Scanner::TokenType::IDENTIFIER)
+        parseDcln();
+        int i = 1;
+        while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
         {
+            readToken(Scanner::TokenType::SEMICOLON);
             parseDcln();
             ++i;
-            while ((*nextToken)->getType() == Scanner::TokenType::SEMICOLON)
-            {
-                readToken(Scanner::TokenType::SEMICOLON);
-                parseDcln();
-                ++i;
-            }
         }
         BUILD_TREE(ASTNodeType::PARAMS, i);
     }
@@ -207,7 +203,7 @@ namespace Parser
             parseDcln();
             readToken(Scanner::TokenType::SEMICOLON);
             ++i;
-            while ((*nextToken)->getType() != Scanner::TokenType::BEGIN && (*nextToken)->getType() != Scanner::TokenType::FUNCTION)
+            while (!(TOKEN_IN(DclnsFollowSet)))
             {
                 parseDcln();
                 readToken(Scanner::TokenType::SEMICOLON);
@@ -337,10 +333,11 @@ namespace Parser
             readToken(Scanner::TokenType::CASE);
             parseExpression();
             readToken(Scanner::TokenType::OF);
-            parseCaseclauses();
-            parseOtherwiseClause();
+            i = parseCaseclauses() + 1;
+            if (parseOtherwiseClause())
+                ++i;
             readToken(Scanner::TokenType::END);
-            BUILD_TREE(ASTNodeType::CASE, 3);
+            BUILD_TREE(ASTNodeType::CASE, i);
             break;
         case Scanner::TokenType::READ:
             readToken(Scanner::TokenType::READ);
@@ -397,15 +394,18 @@ namespace Parser
         }
     }
 
-    void Parser::parseCaseclauses()
+    int Parser::parseCaseclauses()
     {
         parseCaseclause();
+        int i = 1;
         readToken(Scanner::TokenType::SEMICOLON);
         while (TOKEN_IN(CaseclauseSelectSet))
         {
             parseCaseclause();
+            ++i;
             readToken(Scanner::TokenType::SEMICOLON);
         }
+        return i;
     }
 
     void Parser::parseCaseclause()
@@ -427,7 +427,7 @@ namespace Parser
     void Parser::parseCaseExpression()
     {
         parseConstValue();
-        while ((*nextToken)->getType() == Scanner::TokenType::CASE_DOTS)
+        if ((*nextToken)->getType() == Scanner::TokenType::CASE_DOTS)
         {
             readToken(Scanner::TokenType::CASE_DOTS);
             parseConstValue();
@@ -435,14 +435,16 @@ namespace Parser
         }
     }
 
-    void Parser::parseOtherwiseClause()
+    bool Parser::parseOtherwiseClause()
     {
         if ((*nextToken)->getType() == Scanner::TokenType::OTHERWISE)
         {
             readToken(Scanner::TokenType::OTHERWISE);
             parseStatement();
             BUILD_TREE(ASTNodeType::OTHERWISE, 1);
+            return true;
         }
+        return false;
     }
 
     void Parser::parseAssignment()

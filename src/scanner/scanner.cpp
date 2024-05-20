@@ -192,7 +192,7 @@ namespace Scanner
                 }
 
                 // swap
-                if (getCurrentChar() == ':' && getCharFromShiftPosition(1) == '=' && getCharFromShiftPosition(':'))
+                if (getCurrentChar() == ':' && getCharFromShiftPosition(1) == '=' && getCharFromShiftPosition('2') == ':')
                 {
                     ADD_TOKEN(new Token(TokenType::SWAP, line.substr(hPos, 3), hPos, vPos));
                     hPos += 3;
@@ -420,7 +420,7 @@ namespace Scanner
         if (getCurrentChar() == '\'' && getCharFromShiftPosition(1) != '\'' && getCharFromShiftPosition(2) == '\'')
         {
             hPos += 3;
-            return inputLines[vPos].substr(start, hPos - start);
+            return inputLines[vPos].substr(start + 1, hPos - start - 1);
         }
         return "";
     }

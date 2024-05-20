@@ -34,10 +34,10 @@ namespace Parser
         void parseStatement();
         void parseOutExp();
         void parseStringNode();
-        void parseCaseclauses();
+        int parseCaseclauses();
         void parseCaseclause();
         void parseCaseExpression();
-        void parseOtherwiseClause();
+        bool parseOtherwiseClause();
         void parseAssignment();
         void parseForStat();
         void parseForExp();

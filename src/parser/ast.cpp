@@ -180,7 +180,7 @@ namespace Parser
             typeStr = "<integer>";
             break;
         case CHAR:
-            typeStr = "<character>";
+            typeStr = "<char>";
             break;
         case STR:
             typeStr = "<string>";
