@@ -159,14 +159,6 @@ namespace Scanner
                     {
                         tokens.push_back(new Token(TokenType::EOF_TOKEN, identifierToken, hPos - 2, vPos));
                     }
-                    else if (identifierToken == "true")
-                    {
-                        tokens.push_back(new Token(TokenType::TRUE, identifierToken, hPos - 3, vPos));
-                    }
-                    else if (identifierToken == "false")
-                    {
-                        tokens.push_back(new Token(TokenType::FALSE, identifierToken, hPos - 4, vPos));
-                    }
                     else
                     {
                         tokens.push_back(new Token(TokenType::IDENTIFIER, identifierToken, hPos - identifierToken.size() + 1, vPos));
@@ -436,7 +428,7 @@ namespace Scanner
         if (getCurrentChar() == '\"')
         {
             hPos++;
-            while (hPos < inputLines[vPos] && getCurrentChar() != '\"')
+            while (hPos < inputLines[vPos].size() && getCurrentChar() != '\"')
             {
                 if (getCurrentChar() == '\n')
                     break;

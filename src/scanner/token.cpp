@@ -22,6 +22,6 @@ namespace Scanner
     // Get the location of the token
     Location Token::getLocation()
     {
-        return {hPos, vPos};
+        return std::make_pair(hPos, vPos);
     }
 }
