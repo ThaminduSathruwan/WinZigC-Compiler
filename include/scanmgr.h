@@ -5,19 +5,25 @@
 #include <fstream>
 #include <sstream>
 #include "scanner.h"
+#include "singleton.h"
 
 namespace Scanner
 {
-    class ScanMgr
+    class ScanMgr : public Singleton<ScanMgr>
     {
     public:
-        ScanMgr();
-        // void processFile(const std::string &filename);
-        void processFile();
+        void processFile(const std::string &filename);
+        void runScanner();
+        const std::vector<Token *> &getTokens();
+        void addToken(Token *token);
+        std::string getLineByNum(int lineNumber);
         ~ScanMgr();
+        friend class Singleton<ScanMgr>;
 
     private:
-        Scanner scanner(const std::vector<std::string> &inputLines);
+        ScanMgr() = default;
+        std::vector<Token *> tokens;
+        std::vector<std::string> lines;
     };
 }
 

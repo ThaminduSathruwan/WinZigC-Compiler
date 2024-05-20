@@ -13,7 +13,7 @@ namespace Scanner
     {
     public:
         Scanner(const std::vector<std::string> &inputLines);
-        std::vector<Token *> tokenize();
+        void tokenize();
 
     private:
         const std::vector<std::string> &inputLines; // Reference to input lines

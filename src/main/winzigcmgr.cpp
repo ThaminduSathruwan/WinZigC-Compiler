@@ -14,10 +14,8 @@ namespace WinZigCC
 
     void WinZigCMgr::run()
     {
-        // Create an instance of ScanMgr
-        Scanner::ScanMgr scanManager;
-
         // Call the processFile method
-        scanManager.processFile();
+        Scanner::ScanMgr::Instance().processFile("tests/frontend/programs/winzig_01");
+        Scanner::ScanMgr::Instance().runScanner();
     }
 }
