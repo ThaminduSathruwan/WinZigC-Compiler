@@ -1,12 +1,14 @@
 #include <iostream>
 #include "../../include/parser.h"
 #include "../../include/parsemgr.h"
+#include "../../include/scanmgr.h"
 
 namespace Parser
 {
 
-    void ParseMgr::runParser(std::vector<Scanner::Token *> &tokens)
+    void ParseMgr::runParser()
     {
+        auto tokens = Scanner::ScanMgr::Instance().getTokens();
         Parser parser(tokens);
         parser.parse();
     }

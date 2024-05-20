@@ -1,14 +1,22 @@
 #include <iostream>
 #include <sstream>
 #include "winzigcmgr.h"
+#include "../../include/options.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    std::stringstream progStream;
-    progStream << "Welcome to the WinZigC compiler!" << std::endl;
-    std::string program = progStream.str();
+    if (argc < 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <program>" << std::endl;
+        return 1;
+    }
 
-    WinZigCC::WinZigCMgr winZigCMgr(program);
+    if (!Options::OptionsMgr::Instance().setOptions(argc, argv))
+    {
+        return 1;
+    }
+
+    WinZigCC::WinZigCMgr winZigCMgr;
     winZigCMgr.run();
 
     return 0;

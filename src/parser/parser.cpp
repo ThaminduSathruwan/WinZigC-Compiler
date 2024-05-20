@@ -14,14 +14,6 @@ namespace Parser
     {
     }
 
-    Parser::~Parser()
-    {
-        for (auto &token : tokens)
-        {
-            delete token;
-        }
-    }
-
     void Parser::parse()
     {
         nextToken = tokens.begin();

@@ -2,20 +2,28 @@
 #include "../../include/scanmgr.h"
 #include "../../include/parsemgr.h"
 #include "../../include/compilemgr.h"
+#include "../../include/options.h"
 #include "winzigcmgr.h"
+
+template <typename T>
+T Singleton<T>::instance;
+template class Singleton<Options::OptionsMgr>;
 
 namespace WinZigCC
 {
-    WinZigCMgr::WinZigCMgr(const std::string &program)
-        : program(program)
+    WinZigCMgr::WinZigCMgr() : program(Options::OptionsMgr::Instance().getInputFileName())
     {
-        std::cout << "Welcome to the WinZigC compiler!" << std::endl;
     }
 
     void WinZigCMgr::run()
     {
         // Call the processFile method
-        Scanner::ScanMgr::Instance().processFile("tests/frontend/programs/winzig_01");
+        Scanner::ScanMgr::Instance().processFile(program);
         Scanner::ScanMgr::Instance().runScanner();
+        Parser::ParseMgr::Instance().runParser();
+        if (Options::OptionsMgr::Instance().isPrintAST())
+        {
+            Parser::ParseMgr::Instance().printAST(std::cout);
+        }
     }
 }

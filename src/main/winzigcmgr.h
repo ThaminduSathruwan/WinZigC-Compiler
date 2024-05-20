@@ -11,7 +11,7 @@ namespace WinZigCC
     class WinZigCMgr
     {
     public:
-        WinZigCMgr(const std::string &program);
+        WinZigCMgr();
         void run();
 
     private:

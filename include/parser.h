@@ -14,7 +14,6 @@ namespace Parser
     {
     public:
         Parser(std::vector<Scanner::Token *> &tokens);
-        ~Parser();
         void parse();
 
     private:

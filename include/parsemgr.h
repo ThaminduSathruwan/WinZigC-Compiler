@@ -11,7 +11,7 @@ namespace Parser
     class ParseMgr : public Singleton<ParseMgr>
     {
     public:
-        void runParser(std::vector<Scanner::Token *> &tokens);
+        void runParser();
         void printAST(std::ostream &os);
         void build_tree(ASTNodeType type, int childrenCnt);
         void build_tree(std::string str, bool identifier = true);
