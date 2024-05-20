@@ -7,6 +7,10 @@
 
 #define ADD_TOKEN(token) ScanMgr::Instance().addToken(token)
 
+template <typename T>
+T Singleton<T>::instance;
+template class Singleton<Scanner::ScanMgr>;
+
 namespace Scanner
 {
     Scanner::Scanner(const std::vector<std::string> &inputLines) : inputLines(inputLines), vPos(0), hPos(0) {}
