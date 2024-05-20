@@ -14,5 +14,8 @@ namespace WinZigCC
 
     void WinZigCMgr::run()
     {
+        // Call the processFile method
+        Scanner::ScanMgr::Instance().processFile("tests/frontend/programs/winzig_01");
+        Scanner::ScanMgr::Instance().runScanner();
     }
 }

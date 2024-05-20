@@ -15,7 +15,6 @@ namespace WinZigCC
         void run();
 
     private:
-        Scanner::ScanMgr scanMgr;
         Compiler::CompileMgr compileMgr;
         const std::string &program;
     };
