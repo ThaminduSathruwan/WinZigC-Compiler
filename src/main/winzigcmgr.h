@@ -15,7 +15,6 @@ namespace WinZigCC
         void run();
 
     private:
-        Parser::ParseMgr parseMgr;
         Compiler::CompileMgr compileMgr;
         const std::string &program;
     };
