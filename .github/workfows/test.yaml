@@ -1,0 +1,11 @@
+name: C/C++ CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: make debug
+      - name: Test
+        run: make test

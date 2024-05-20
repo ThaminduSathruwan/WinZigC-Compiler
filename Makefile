@@ -7,7 +7,7 @@ LINK_ERR_LOG := dist/link_err.log
 EXEC_LOG := dist/exec.log
 OUTPUT := winzigcc
 
-.PHONY: all clean debug
+.PHONY: all clean debug test
 
 all:
 	@echo "Cleaning up..."
@@ -49,3 +49,6 @@ debug:
 	@export DEBUG=1; \
 	$(MAKE) all | sed '/directory/d'; \
 	unset DEBUG
+
+test:
+	@$(MAKE) -C tests --no-print-directory
