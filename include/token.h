@@ -73,7 +73,6 @@ namespace Scanner
         LEFT_CURLEY,
         RIGHT_CURLEY,
         DOUBLE_QUOTE,
-        SINGLE_QUOTE
     } TokenType;
 
     typedef std::pair<unsigned int, unsigned int> Location;

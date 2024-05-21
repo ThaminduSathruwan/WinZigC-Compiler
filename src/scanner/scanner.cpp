@@ -334,17 +334,6 @@ namespace Scanner
                     ScanMgr::Instance().addError(new Token(TokenType::LEFT_CURLEY, "}", hPos, vPos));
                     hPos++;
                 }
-
-                if (getCurrentChar() == '"')
-                {
-                    ScanMgr::Instance().addError(new Token(TokenType::DOUBLE_QUOTE, "\"", hPos, vPos));
-                    hPos++;
-                }
-                if (getCurrentChar() == '\'')
-                {
-                    ScanMgr::Instance().addError(new Token(TokenType::SINGLE_QUOTE, "\'", hPos, vPos));
-                    hPos++;
-                }
             }
             hPos = 0;
             vPos++;
