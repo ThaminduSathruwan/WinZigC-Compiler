@@ -1,9 +1,13 @@
 #include <iostream>
+#include <array>
+#include <algorithm>
 #include "../../include/parser.h"
 #include "../../include/parsemgr.h"
 #include "../../include/scanmgr.h"
 
 #define ERROR_LINE_NUM_WIDTH 10
+
+const std::array<char, 4> spaceChars = {' ', '\f', '\r', '\t'};
 
 namespace Parser
 {
@@ -65,17 +69,21 @@ namespace Parser
                 os << error << std::endl;
                 if (!error.isEnd() && error.getToken() != nullptr)
                 {
+                    std::string line = Scanner::ScanMgr::Instance().getLineByNum(error.getToken()->getLocation().second);
                     os.width(ERROR_LINE_NUM_WIDTH);
                     os << error.getToken()->getLocation().second + 1;
                     os.width(0);
-                    os << " | " << Scanner::ScanMgr::Instance().getLineByNum(error.getToken()->getLocation().second) << std::endl;
+                    os << " | " << line << std::endl;
                     os.width(ERROR_LINE_NUM_WIDTH);
                     os << " ";
                     os.width(0);
                     os << " | ";
                     for (int i = 0; i < (int)error.getToken()->getLocation().first; ++i)
                     {
-                        os << " ";
+                        if (std::find(spaceChars.begin(), spaceChars.end(), line[i]) != spaceChars.end())
+                            os << line[i];
+                        else
+                            os << " ";
                     }
                     os << "^";
                     for (int i = 1; i < (int)error.getToken()->getData().size(); ++i)
@@ -89,5 +97,4 @@ namespace Parser
         }
         return false;
     }
-
 }
