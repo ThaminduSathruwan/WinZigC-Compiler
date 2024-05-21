@@ -21,6 +21,7 @@ namespace Parser
     {
         nextToken = tokens.begin();
         parseWinzig();
+        assertEnd();
         ParseMgr::Instance().finalizeAST();
     }
 
@@ -699,6 +700,15 @@ namespace Parser
         readToken(Scanner::TokenType::LEFT_PAREN);
         parseExpression();
         readToken(Scanner::TokenType::RIGHT_PAREN);
+    }
+
+    void Parser::assertEnd()
+    {
+        while (nextToken != tokens.end())
+        {
+            SYNTAX_ERROR();
+            ++nextToken;
+        }
     }
 
 }
