@@ -44,9 +44,9 @@ namespace Parser
         void parseTerm();
         void parseFactor();
         void parsePrimary();
-        void NewFunction();
         void parseName();
         void ExtractParenthesizedExpression();
+        void assertEnd();
 
     private:
         std::vector<Scanner::Token *> tokens;
