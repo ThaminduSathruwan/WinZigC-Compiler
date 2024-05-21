@@ -19,15 +19,12 @@ namespace Scanner
     {
         while (vPos < inputLines.size())
         {
-            // const std::string &line = inputLines[vPos];
-            // std::cout << "Incoming String: " << inputLines[vPos] << std::endl; // Print each string from the array.
 
             while (hPos < inputLines[vPos].size())
             {
 
                 const std::string &line = inputLines[vPos];
 
-                // std::cout << "current hPos char" << line[hPos] << std::endl;
                 std::string identifierToken = findIdentifierOrPredefineToken();
 
                 if (!identifierToken.empty())

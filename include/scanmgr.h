@@ -17,6 +17,7 @@ namespace Scanner
         const std::vector<Token *> &getTokens();
         void addToken(Token *token);
         std::string getLineByNum(int lineNumber);
+        void printTokens(std::ostream &os);
         ~ScanMgr();
         friend class Singleton<ScanMgr>;
 

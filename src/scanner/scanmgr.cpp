@@ -29,11 +29,6 @@ namespace Scanner
 
         // Tokenize the input lines
         scanner.tokenize();
-
-        // for (Token *token : tokens)
-        // {
-        //     std::cout << "Token Type: " << token->getType() << ", Data: " << token->getData() << std::endl;
-        // }
     }
 
     const std::vector<Token *> &
@@ -50,6 +45,14 @@ namespace Scanner
     std::string ScanMgr::getLineByNum(int lineNumber)
     {
         return lines[lineNumber];
+    }
+
+    void ScanMgr::printTokens(std::ostream &os)
+    {
+        for (Token *token : tokens)
+        {
+            os << *token << std::endl;
+        }
     }
 
     ScanMgr::~ScanMgr()

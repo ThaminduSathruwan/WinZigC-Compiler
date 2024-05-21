@@ -69,8 +69,6 @@ namespace Scanner
         STRING,
         SINGLE_LINE_COMMENT,
         MULTI_LINE_COMMENT,
-        TRUE,
-        FALSE,
         ERROR
     } TokenType;
 
@@ -83,6 +81,7 @@ namespace Scanner
         TokenType getType();
         std::string getData();
         Location getLocation();
+        friend std::ostream &operator<<(std::ostream &os, const Token &token);
 
     private:
         TokenType type;
@@ -90,6 +89,8 @@ namespace Scanner
         unsigned int hPos;
         unsigned int vPos;
     };
+
+    std::string tokenTypeToString(TokenType type);
 
 }
 
