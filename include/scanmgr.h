@@ -4,8 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <set>
 #include "scanner.h"
 #include "singleton.h"
+#include "syntax_error.h"
 
 namespace Scanner
 {
@@ -13,11 +15,12 @@ namespace Scanner
     {
     public:
         void processFile(const std::string &filename);
-        void runScanner();
+        bool runScanner();
         const std::vector<Token *> &getTokens();
         void addToken(Token *token);
         std::string getLineByNum(int lineNumber);
         void printTokens(std::ostream &os);
+        void addError(Token *token, Parser::SyntaxErrorType type = Parser::SyntaxErrorType::UNMATCHED_TOKEN);
         ~ScanMgr();
         friend class Singleton<ScanMgr>;
 
@@ -25,6 +28,8 @@ namespace Scanner
         ScanMgr() = default;
         std::vector<Token *> tokens;
         std::vector<std::string> lines;
+        std::set<Parser::SyntaxError> errors;
+        bool printErrors(std::ostream &os);
     };
 }
 

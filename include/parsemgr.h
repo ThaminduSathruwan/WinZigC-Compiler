@@ -20,7 +20,7 @@ namespace Parser
         void build_tree(int32_t integer);
         void build_tree(char character);
         void finalizeAST();
-        void addError(Scanner::Token *token, bool end = false);
+        void addError(Scanner::Token *token, SyntaxErrorType type = SyntaxErrorType::UNEXPECTED_TOKEN);
         friend class Singleton<ParseMgr>;
 
     private:

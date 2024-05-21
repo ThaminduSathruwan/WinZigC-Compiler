@@ -23,12 +23,14 @@ namespace Scanner
         file.close();
     }
 
-    void ScanMgr::runScanner()
+    bool ScanMgr::runScanner()
     {
         Scanner scanner(lines);
 
         // Tokenize the input lines
         scanner.tokenize();
+
+        return !printErrors(std::cerr);
     }
 
     const std::vector<Token *> &
@@ -53,6 +55,46 @@ namespace Scanner
         {
             os << *token << std::endl;
         }
+    }
+
+    void ScanMgr::addError(Token *token, Parser::SyntaxErrorType type)
+    {
+        errors.insert(Parser::SyntaxError(token, type));
+    }
+
+    bool ScanMgr::printErrors(std::ostream &os)
+    {
+        if (errors.size() > 0)
+        {
+            for (auto it = errors.begin(); it != errors.end(); it++)
+            {
+                Parser::SyntaxError error = *it;
+                os << error << std::endl;
+                if (error.getType() != Parser::SyntaxErrorType::UNEXPECTED_EOF && error.getToken() != nullptr)
+                {
+                    os.width(ERROR_LINE_NUM_WIDTH);
+                    os << error.getToken()->getLocation().second + 1;
+                    os.width(0);
+                    os << " | " << getLineByNum(error.getToken()->getLocation().second) << std::endl;
+                    os.width(ERROR_LINE_NUM_WIDTH);
+                    os << " ";
+                    os.width(0);
+                    os << " | ";
+                    for (int i = 0; i < (int)error.getToken()->getLocation().first; ++i)
+                    {
+                        os << " ";
+                    }
+                    os << "^";
+                    for (int i = 1; i < (int)error.getToken()->getData().size(); ++i)
+                    {
+                        os << "~";
+                    }
+                    os << std::endl;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     ScanMgr::~ScanMgr()
