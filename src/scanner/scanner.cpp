@@ -31,139 +31,139 @@ namespace Scanner
                 {
                     if (identifierToken == "program")
                     {
-                        ADD_TOKEN(new Token(TokenType::PROGRAM, identifierToken, hPos - 6, vPos));
+                        ADD_TOKEN(new Token(TokenType::PROGRAM, identifierToken, hPos - 7, vPos));
                     }
                     else if (identifierToken == "var")
                     {
-                        ADD_TOKEN(new Token(TokenType::VAR, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::VAR, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "const")
                     {
-                        ADD_TOKEN(new Token(TokenType::CONST, identifierToken, hPos - 4, vPos));
+                        ADD_TOKEN(new Token(TokenType::CONST, identifierToken, hPos - 5, vPos));
                     }
                     else if (identifierToken == "type")
                     {
-                        ADD_TOKEN(new Token(TokenType::TYPE, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::TYPE, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "function")
                     {
-                        ADD_TOKEN(new Token(TokenType::FUNCTION, identifierToken, hPos - 7, vPos));
+                        ADD_TOKEN(new Token(TokenType::FUNCTION, identifierToken, hPos - 8, vPos));
                     }
                     else if (identifierToken == "return")
                     {
-                        ADD_TOKEN(new Token(TokenType::RETURN, identifierToken, hPos - 5, vPos));
+                        ADD_TOKEN(new Token(TokenType::RETURN, identifierToken, hPos - 6, vPos));
                     }
                     else if (identifierToken == "begin")
                     {
-                        ADD_TOKEN(new Token(TokenType::BEGIN, identifierToken, hPos - 4, vPos));
+                        ADD_TOKEN(new Token(TokenType::BEGIN, identifierToken, hPos - 5, vPos));
                     }
                     else if (identifierToken == "end")
                     {
-                        ADD_TOKEN(new Token(TokenType::END, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::END, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "output")
                     {
-                        ADD_TOKEN(new Token(TokenType::OUTPUT, identifierToken, hPos - 5, vPos));
+                        ADD_TOKEN(new Token(TokenType::OUTPUT, identifierToken, hPos - 6, vPos));
                     }
                     else if (identifierToken == "if")
                     {
-                        ADD_TOKEN(new Token(TokenType::IF, identifierToken, hPos - 1, vPos));
+                        ADD_TOKEN(new Token(TokenType::IF, identifierToken, hPos - 2, vPos));
                     }
                     else if (identifierToken == "then")
                     {
-                        ADD_TOKEN(new Token(TokenType::THEN, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::THEN, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "else")
                     {
-                        ADD_TOKEN(new Token(TokenType::ELSE, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::ELSE, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "while")
                     {
-                        ADD_TOKEN(new Token(TokenType::WHILE, identifierToken, hPos - 4, vPos));
+                        ADD_TOKEN(new Token(TokenType::WHILE, identifierToken, hPos - 5, vPos));
                     }
                     else if (identifierToken == "do")
                     {
-                        ADD_TOKEN(new Token(TokenType::DO, identifierToken, hPos - 1, vPos));
+                        ADD_TOKEN(new Token(TokenType::DO, identifierToken, hPos - 2, vPos));
                     }
                     else if (identifierToken == "case")
                     {
-                        ADD_TOKEN(new Token(TokenType::CASE, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::CASE, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "of")
                     {
-                        ADD_TOKEN(new Token(TokenType::OF, identifierToken, hPos - 1, vPos));
+                        ADD_TOKEN(new Token(TokenType::OF, identifierToken, hPos - 2, vPos));
                     }
                     else if (identifierToken == "otherwise")
                     {
-                        ADD_TOKEN(new Token(TokenType::OTHERWISE, identifierToken, hPos - 8, vPos));
+                        ADD_TOKEN(new Token(TokenType::OTHERWISE, identifierToken, hPos - 9, vPos));
                     }
                     else if (identifierToken == "repeat")
                     {
-                        ADD_TOKEN(new Token(TokenType::REPEAT, identifierToken, hPos - 5, vPos));
+                        ADD_TOKEN(new Token(TokenType::REPEAT, identifierToken, hPos - 6, vPos));
                     }
                     else if (identifierToken == "for")
                     {
-                        ADD_TOKEN(new Token(TokenType::FOR, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::FOR, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "until")
                     {
-                        ADD_TOKEN(new Token(TokenType::UNTIL, identifierToken, hPos - 4, vPos));
+                        ADD_TOKEN(new Token(TokenType::UNTIL, identifierToken, hPos - 5, vPos));
                     }
                     else if (identifierToken == "loop")
                     {
-                        ADD_TOKEN(new Token(TokenType::LOOP, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::LOOP, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "pool")
                     {
-                        ADD_TOKEN(new Token(TokenType::POOL, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::POOL, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "exit")
                     {
-                        ADD_TOKEN(new Token(TokenType::EXIT, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::EXIT, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "mod")
                     {
-                        ADD_TOKEN(new Token(TokenType::MOD, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::MOD, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "and")
                     {
-                        ADD_TOKEN(new Token(TokenType::AND, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::AND, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "or")
                     {
-                        ADD_TOKEN(new Token(TokenType::OR, identifierToken, hPos - 1, vPos));
+                        ADD_TOKEN(new Token(TokenType::OR, identifierToken, hPos - 2, vPos));
                     }
                     else if (identifierToken == "not")
                     {
-                        ADD_TOKEN(new Token(TokenType::NOT, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::NOT, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "read")
                     {
-                        ADD_TOKEN(new Token(TokenType::READ, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::READ, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "succ")
                     {
-                        ADD_TOKEN(new Token(TokenType::SUCC, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::SUCC, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "pred")
                     {
-                        ADD_TOKEN(new Token(TokenType::PRED, identifierToken, hPos - 3, vPos));
+                        ADD_TOKEN(new Token(TokenType::PRED, identifierToken, hPos - 4, vPos));
                     }
                     else if (identifierToken == "chr")
                     {
-                        ADD_TOKEN(new Token(TokenType::CHAR, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::CHAR, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "ord")
                     {
-                        ADD_TOKEN(new Token(TokenType::ORD, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::ORD, identifierToken, hPos - 3, vPos));
                     }
                     else if (identifierToken == "eof")
                     {
-                        ADD_TOKEN(new Token(TokenType::EOF_TOKEN, identifierToken, hPos - 2, vPos));
+                        ADD_TOKEN(new Token(TokenType::EOF_TOKEN, identifierToken, hPos - 3, vPos));
                     }
                     else
                     {
-                        ADD_TOKEN(new Token(TokenType::IDENTIFIER, identifierToken, hPos - identifierToken.size() + 1, vPos));
+                        ADD_TOKEN(new Token(TokenType::IDENTIFIER, identifierToken, hPos - identifierToken.size(), vPos));
                     }
                 }
 
@@ -171,21 +171,21 @@ namespace Scanner
 
                 if (!integerToken.empty())
                 {
-                    ADD_TOKEN(new Token(TokenType::INTEGER, integerToken, hPos - integerToken.size() + 1, vPos));
+                    ADD_TOKEN(new Token(TokenType::INTEGER, integerToken, hPos - integerToken.size(), vPos));
                 }
 
                 std::string charToken = findChar();
 
                 if (!charToken.empty())
                 {
-                    ADD_TOKEN(new Token(TokenType::CHAR, charToken, hPos - charToken.size() + 1, vPos));
+                    ADD_TOKEN(new Token(TokenType::CHAR, charToken, hPos - charToken.size(), vPos));
                 }
 
                 std::string stringToken = findString();
 
                 if (!stringToken.empty())
                 {
-                    ADD_TOKEN(new Token(TokenType::STRING, stringToken, hPos - stringToken.size() + 1, vPos));
+                    ADD_TOKEN(new Token(TokenType::STRING, stringToken, hPos - stringToken.size(), vPos));
                 }
 
                 // swap
@@ -328,6 +328,23 @@ namespace Scanner
                 std::string newLine = findNewLine();
 
                 std::string whiteSpace = findWhiteSpace();
+
+                if (getCurrentChar() == '}')
+                {
+                    ScanMgr::Instance().addError(new Token(TokenType::LEFT_CURLEY, "}", hPos, vPos));
+                    hPos++;
+                }
+
+                if (getCurrentChar() == '"')
+                {
+                    ScanMgr::Instance().addError(new Token(TokenType::DOUBLE_QUOTE, "\"", hPos, vPos));
+                    hPos++;
+                }
+                if (getCurrentChar() == '\'')
+                {
+                    ScanMgr::Instance().addError(new Token(TokenType::SINGLE_QUOTE, "\'", hPos, vPos));
+                    hPos++;
+                }
             }
             hPos = 0;
             vPos++;
@@ -350,6 +367,8 @@ namespace Scanner
 
     std::string Scanner::findMultiLineComment()
     {
+        int start_h = hPos;
+        int start_v = vPos;
         if (getCurrentChar() == '{')
         {
             while (vPos < inputLines.size() && getCurrentChar() != '}')
@@ -368,6 +387,10 @@ namespace Scanner
                     vPos++;
                     hPos = 0;
                 }
+            }
+            if (getCurrentChar() != '}')
+            {
+                ScanMgr::Instance().addError(new Token(TokenType::LEFT_CURLEY, "{", start_h, start_v));
             }
             vPos++;
             hPos = 0;
@@ -433,6 +456,10 @@ namespace Scanner
                 if (getCurrentChar() == '\n')
                     break;
                 hPos++;
+            }
+            if (hPos == inputLines[vPos].size())
+            {
+                ScanMgr::Instance().addError(new Token(TokenType::DOUBLE_QUOTE, "\"", start, vPos));
             }
             hPos++;
             return inputLines[vPos].substr(start, hPos - start);

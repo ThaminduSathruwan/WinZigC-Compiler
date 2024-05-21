@@ -19,7 +19,8 @@ namespace WinZigCC
     {
         // Call the processFile method
         Scanner::ScanMgr::Instance().processFile(program);
-        Scanner::ScanMgr::Instance().runScanner();
+        if (!Scanner::ScanMgr::Instance().runScanner())
+            return false;
 
         if (!Parser::ParseMgr::Instance().runParser())
             return false;

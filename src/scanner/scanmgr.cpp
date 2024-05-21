@@ -23,12 +23,18 @@ namespace Scanner
         file.close();
     }
 
-    void ScanMgr::runScanner()
+    bool ScanMgr::runScanner()
     {
         Scanner scanner(lines);
 
         // Tokenize the input lines
         scanner.tokenize();
+
+        if (printErrors())
+
+            return false;
+
+        return true;
     }
 
     const std::vector<Token *> &
@@ -53,6 +59,21 @@ namespace Scanner
         {
             os << *token << std::endl;
         }
+    }
+
+    void ScanMgr::addError(Token *token, bool end)
+    {
+        errors.insert(Parser::SyntaxError(token, end));
+    }
+
+    bool ScanMgr::printErrors()
+    {
+        if (errors.size() > 0)
+        {
+            std::cerr << "Token errors " << std::endl;
+            return true;
+        }
+        return false;
     }
 
     ScanMgr::~ScanMgr()

@@ -69,7 +69,11 @@ namespace Scanner
         STRING,
         SINGLE_LINE_COMMENT,
         MULTI_LINE_COMMENT,
-        ERROR
+        ERROR,
+        LEFT_CURLEY,
+        RIGHT_CURLEY,
+        DOUBLE_QUOTE,
+        SINGLE_QUOTE
     } TokenType;
 
     typedef std::pair<unsigned int, unsigned int> Location;
