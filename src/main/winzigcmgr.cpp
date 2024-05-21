@@ -24,10 +24,11 @@ namespace WinZigCC
         if (!Parser::ParseMgr::Instance().runParser())
             return false;
 
+        if (Options::OptionsMgr::Instance().isPrintTokens())
+            Scanner::ScanMgr::Instance().printTokens(std::cout);
+
         if (Options::OptionsMgr::Instance().isPrintAST())
-        {
             Parser::ParseMgr::Instance().printAST(std::cout);
-        }
 
         return true;
     }

@@ -10,6 +10,7 @@ namespace Options
     {
     public:
         bool isPrintAST();
+        bool isPrintTokens();
         std::string &getInputFileName();
         bool setOptions(int argc, char *argv[]);
         friend class Singleton<OptionsMgr>;
@@ -20,6 +21,7 @@ namespace Options
         char **argv;
         std::string inputFileName;
         bool printAST;
+        bool printTokens;
         bool parseOptions();
     };
 }

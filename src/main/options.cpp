@@ -13,6 +13,10 @@ namespace Options
             {
                 printAST = true;
             }
+            else if (arg == std::string("-tokens"))
+            {
+                printTokens = true;
+            }
             else if (arg.length() > 0 && arg[0] != '-')
             {
                 inputFileName = arg;
@@ -30,12 +34,23 @@ namespace Options
             return false;
         }
 
+        if (printAST && printTokens)
+        {
+            std::cerr << "Incorrect usage: -ast and -tokens are mutually exclusive" << std::endl;
+            return false;
+        }
+
         return true;
     }
 
     bool OptionsMgr::isPrintAST()
     {
         return printAST;
+    }
+
+    bool OptionsMgr::isPrintTokens()
+    {
+        return printTokens;
     }
 
     std::string &OptionsMgr::getInputFileName()
