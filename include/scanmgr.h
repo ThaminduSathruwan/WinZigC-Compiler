@@ -20,7 +20,7 @@ namespace Scanner
         void addToken(Token *token);
         std::string getLineByNum(int lineNumber);
         void printTokens(std::ostream &os);
-        void addError(Token *token, bool end = false);
+        void addError(Token *token, Parser::SyntaxErrorType type = Parser::SyntaxErrorType::UNMATCHED_TOKEN);
         ~ScanMgr();
         friend class Singleton<ScanMgr>;
 
@@ -29,7 +29,7 @@ namespace Scanner
         std::vector<Token *> tokens;
         std::vector<std::string> lines;
         std::set<Parser::SyntaxError> errors;
-        bool printErrors();
+        bool printErrors(std::ostream &os);
     };
 }
 

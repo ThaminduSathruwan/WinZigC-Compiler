@@ -3,8 +3,6 @@
 #include "../../include/parsemgr.h"
 #include "../../include/scanmgr.h"
 
-#define ERROR_LINE_NUM_WIDTH 10
-
 namespace Parser
 {
 
@@ -14,10 +12,7 @@ namespace Parser
         Parser parser(tokens);
         parser.parse();
 
-        if (printErrors(std::cerr))
-            return false;
-
-        return true;
+        return !printErrors(std::cerr);
     }
 
     void ParseMgr::printAST(std::ostream &os)
@@ -50,9 +45,9 @@ namespace Parser
         ast.finalize();
     }
 
-    void ParseMgr::addError(Scanner::Token *token, bool end)
+    void ParseMgr::addError(Scanner::Token *token, SyntaxErrorType type)
     {
-        errors.insert(SyntaxError(token, end));
+        errors.insert(SyntaxError(token, type));
     }
 
     bool ParseMgr::printErrors(std::ostream &os)
@@ -63,7 +58,7 @@ namespace Parser
             {
                 SyntaxError error = *it;
                 os << error << std::endl;
-                if (!error.isEnd() && error.getToken() != nullptr)
+                if (error.getType() != SyntaxErrorType::UNEXPECTED_EOF && error.getToken() != nullptr)
                 {
                     os.width(ERROR_LINE_NUM_WIDTH);
                     os << error.getToken()->getLocation().second + 1;
