@@ -29,7 +29,7 @@ namespace Parser
     {
         if (nextToken == tokens.end())
         {
-            ParseMgr::Instance().addError(*(nextToken - 1), true);
+            ParseMgr::Instance().addError(*(nextToken - 1), SyntaxErrorType::UNEXPECTED_EOF);
             return nullptr;
         }
         if ((*nextToken)->getType() != type)
