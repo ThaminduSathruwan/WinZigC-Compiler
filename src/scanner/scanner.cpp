@@ -331,7 +331,7 @@ namespace Scanner
 
                 if (getCurrentChar() == '}')
                 {
-                    ScanMgr::Instance().addError(new Token(TokenType::LEFT_CURLEY, "}", hPos, vPos));
+                    ScanMgr::Instance().addError(new Token(TokenType::RIGHT_CURLEY, "}", hPos, vPos));
                     hPos++;
                 }
             }
